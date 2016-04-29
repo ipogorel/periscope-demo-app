@@ -1,0 +1,6 @@
+<template>
+  <template repeat.for="dboard of dashboards">
+    &nbsp;&nbsp;<button class="btn btn-link" click.trigger="navigate(dboard)">${dboard.title}</button>
+    <br/>
+  </template>
+</template>
