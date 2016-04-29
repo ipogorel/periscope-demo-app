@@ -6,7 +6,7 @@ import $ from 'jquery';
 @inject(DefaultDashboardConfiguration)
 export class App {
   constructor(dashboardsConfiguration) {
-    this.dashboardsConfiguration = dashboardsConfiguration;
+    dashboardsConfiguration.invoke();
   }
 
 
@@ -21,7 +21,7 @@ export class App {
 
   
   attached(){
-    this.dashboardsConfiguration.invoke();
+
     var elementsHeight = $(".navbar")[0].scrollHeight + $(".mainnav")[0].scrollHeight-8;
     if ($(".breadcrumb")[0])
       elementsHeight+=$("breadcrumb")[0].scrollHeight;

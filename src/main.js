@@ -5,7 +5,8 @@ export function configure(aurelia) {
     .standardConfiguration()
     .developmentLogging()
     .plugin('aurelia-animator-css')
-    .feature('periscope-framework')
+    .plugin('periscope-framework')
+    .plugin('periscope-ui')
     //.plugin("grofit/aurelia-chart");
   aurelia.start().then(a => a.setRoot());
 }

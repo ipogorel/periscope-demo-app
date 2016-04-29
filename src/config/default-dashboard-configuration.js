@@ -6,7 +6,9 @@ import {CacheManager, Datasource, JsonDataService, StaticSchemaProvider, MemoryC
 import {UserStateStorage, StateUrlParser, DashboardManager, PeriscopeRouter} from 'periscope-framework';
 import {DashboardConfiguration} from 'periscope-framework';
 
-import {BootstrapDashboard} from './../dashboards/bootstrap-dashboard';
+import {BootstrapDashboard, DefaultSearchBox} from 'periscope-ui';
+
+//, DefaultSearchBox
 
 
 @inject(EventAggregator,  UserStateStorage, DashboardManager, PeriscopeRouter, Factory.of(StaticJsonDataService), Factory.of(JsonDataService), Factory.of(CacheManager))
@@ -83,13 +85,24 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         readService: customersDataService
       }
     });
-
+    //Search box
+    var searchBox = new DefaultSearchBox({
+      name:"positionsSearchWidget",
+      header:"Positions",
+      showHeader:false,
+      dataSource: dsCustomers,
+      dataFilter:"",
+      stateStorage: this._stateStorage,
+      behavior:[
+        new DataFilterChangedBehavior("searchBoxChannel",this._eventAggregator)
+      ]
+    });
 
     var dbCustomers = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "customers",
       title:"Customers",
       route: "/customers"
     });
-
+    dbCustomers.addWidget(searchBox, {sizeX:12, sizeY:1, col:1, row:1});
   }
 }
