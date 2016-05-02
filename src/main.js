@@ -7,6 +7,7 @@ export function configure(aurelia) {
     .plugin('aurelia-animator-css')
     .plugin('periscope-framework')
     .plugin('periscope-ui')
+    .plugin('periscope-widgets-datatables')
     //.plugin("grofit/aurelia-chart");
   aurelia.start().then(a => a.setRoot());
 }
