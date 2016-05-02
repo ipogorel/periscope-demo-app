@@ -1,5 +1,16 @@
 module.exports = {
   "bundles": {
+    "dist/boot": {
+      "includes": [
+        "bootstrap"
+      ],
+      "options": {
+        "inject": true,
+        "minify": false,
+        "depCache": true,
+        "rev": false
+      }
+    },
     "dist/app-build": {
       "includes": [
         "[*.js]",
@@ -26,9 +37,7 @@ module.exports = {
         "aurelia-templating-router",
         "aurelia-loader-default",
         "aurelia-history-browser",
-        "aurelia-logging-console",
-        "bootstrap",
-        "bootstrap/css/bootstrap.css!text"
+        "aurelia-logging-console"
       ],
       "options": {
         "inject": true,
