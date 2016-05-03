@@ -9,7 +9,6 @@ import {DashboardConfiguration} from 'periscope-framework';
 import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSourceConfigurator} from 'periscope-ui';
 import {GridDT} from 'periscope-widgets-datatables';
 import {BarChart} from 'periscope-widgets-chartjs';
-import "periscope-widgets-chartjs/periscope-widget-chartjs.css!";
 
 //, DefaultSearchBox
 

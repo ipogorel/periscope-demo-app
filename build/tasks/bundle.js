@@ -31,12 +31,16 @@ var config = {
         'aurelia-history-browser',
         'aurelia-logging-console',
         'fetch',
+        'font-awesome',
         'periscope-framework',
         'periscope-ui',
+        'periscope-widgets-chartjs',
         'periscope-widgets-datatables',
         'jquery',
         'bootstrap',
-        'bootstrap/css/bootstrap.css!text'
+        'lodash',
+        'periscope-widgets-chartjs/periscope-widget-chartjs.css!',
+        'bootstrap/css/bootstrap.css!'
       ],
       options: {
         inject: true,
