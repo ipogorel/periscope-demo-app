@@ -8,6 +8,6 @@ export function configure(aurelia) {
     .plugin('periscope-framework')
     .plugin('periscope-ui')
     .plugin('periscope-widgets-datatables')
-    //.plugin("grofit/aurelia-chart");
+    .plugin('periscope-widgets-chartjs')
   aurelia.start().then(a => a.setRoot());
 }

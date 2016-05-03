@@ -8,6 +8,8 @@ import {DashboardConfiguration} from 'periscope-framework';
 
 import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSourceConfigurator} from 'periscope-ui';
 import {GridDT} from 'periscope-widgets-datatables';
+import {BarChart} from 'periscope-widgets-chartjs';
+import "periscope-widgets-chartjs/periscope-widget-chartjs.css!";
 
 //, DefaultSearchBox
 
@@ -146,6 +148,29 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     });
 
+    var chart = new BarChart({
+      name:"chartWidget",
+      header:"Country",
+      categoriesField:"Country",
+      dataSource: dsCustomers,
+      showHeader:true,
+      dataFilter:"",
+      behavior:[
+        new DataFilterHandleBehavior("searchBoxChannel", this._eventAggregator),
+        new SettingsHandleBehavior(
+          "gridFieldSelectionChannel",
+          this._eventAggregator,
+          message => {
+            return {
+              header: message.fieldName,
+              categoriesField: message.fieldName
+            };
+          }
+        )
+      ],
+      minHeight: 450
+    });
+
     var changeRoureBefavior = new ChangeRouteBehavior({
         chanel: "gridCommandChannel",
         newRoute: {
@@ -189,7 +214,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
     dbCustomers.addWidget(searchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbCustomers.addWidget(customersGrid,{sizeX:6, sizeY:"*", col:1, row:2});
-    //dbCustomers.addWidget(chart, {sizeX:"*", sizeY:"*", col:7, row:2});
+    dbCustomers.addWidget(chart, {sizeX:"*", sizeY:"*", col:7, row:2});
 
     changeRoureBefavior.attach(dbCustomers);
     createWidgetBehavior.attach(dbCustomers);
