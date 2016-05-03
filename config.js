@@ -12,7 +12,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
   meta: {
     "/local_packages/kendo/js/*": {
       "format": "global",
@@ -27,7 +26,6 @@ System.config({
       ]
     }
   },
-
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.2.0",
     "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.3.2",
