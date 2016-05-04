@@ -2,7 +2,8 @@ import {inject} from 'aurelia-framework';
 import {DashboardBase} from 'periscope-framework';
 import {DefaultDashboardConfiguration} from './config/default-dashboard-configuration';
 import $ from 'jquery';
-import "periscope-widgets-chartjs/periscope-widget-chartjs.css!";
+import "./../assets/styles/app.css!";
+import "./../assets/styles/sidebar.css!";
 
 @inject(DefaultDashboardConfiguration)
 export class App {

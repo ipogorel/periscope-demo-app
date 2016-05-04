@@ -1,6 +1,6 @@
 import {inject, bindable, computedFrom} from 'aurelia-framework';
 import {PeriscopeRouter, NavigationHistory} from 'periscope-framework';
-//import {SearchExpressionStateView} from './../state/search-expression-state-view'
+import {SearchExpressionStateView} from './search-expression-state-view'
 
 @inject(PeriscopeRouter, NavigationHistory)
 export class History {
