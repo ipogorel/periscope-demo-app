@@ -3,7 +3,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 
 import {DashboardBehavior, ManageNavigationStackBehavior, DataSourceHandleBehavior, DataSourceChangedBehavior, ChangeRouteBehavior, ReplaceWidgetBehavior, CreateWidgetBehavior, SettingsHandleBehavior, DataFilterHandleBehavior, DataFieldSelectedBehavior, DataSelectedBehavior, DataActivatedBehavior, DataFilterChangedBehavior} from 'periscope-framework';
 import {CacheManager, Datasource, JsonDataService, StaticSchemaProvider, MemoryCacheStorage, Factory, StaticJsonDataService} from 'periscope-framework';
-import {UserStateStorage, StateUrlParser, DashboardManager, PeriscopeRouter} from 'periscope-framework';
+import {AstToJavascriptParser, UserStateStorage, StateUrlParser, DashboardManager, PeriscopeRouter} from 'periscope-framework';
 import {DashboardConfiguration} from 'periscope-framework';
 
 import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSourceConfigurator} from 'periscope-ui';
@@ -76,7 +76,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         }),
         dataMapper: data=>{
           return data.Results
-        }
+        },
+        filterParser: new AstToJavascriptParser()
       }
     )
     var dsCustomers = new Datasource({
@@ -280,7 +281,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         }),
         dataMapper: data=>{
           return data.Results
-        }
+        },
+        filterParser: new AstToJavascriptParser()
       }
     );
 
@@ -373,7 +375,18 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         dataSource: dsOrders,
         showHeader:true
       },
-      message => { return ("record.Id=='" + message.activatedData["Id"].toString() + "'"); }
+      message => {
+        return [
+          {
+            "left": {
+              "field": "Id",
+              "type": "number",
+              "operand": "==",
+              "value": message.activatedData["Id"].toString()
+            }
+          }
+        ]
+      }
     );
     var manageNavigationStackBehavior = new ManageNavigationStackBehavior(this._eventAggregator);
     replaceWidgetBehavior.attach(dbOrders);
