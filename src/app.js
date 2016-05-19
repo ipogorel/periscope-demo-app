@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import {DashboardBase} from 'periscope-framework';
+import {HistoryStep, DashboardBase} from 'periscope-framework';
 import {DefaultDashboardConfiguration} from './config/default-dashboard-configuration';
 import $ from 'jquery';
 import "./../assets/styles/app.css!";
@@ -14,6 +14,7 @@ export class App {
 
   configureRouter(config, router){
     config.title = 'Periscope';
+    config.addPipelineStep('preActivate', HistoryStep);
     config.map([
       { route: ['/', '/:dashboard'],  name: 'dashboard',  moduleId: './index',  nav: true, title:'Dashboard' }
     ]);

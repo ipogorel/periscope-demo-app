@@ -1,8 +1,9 @@
 import {inject, bindable, computedFrom} from 'aurelia-framework';
-import {PeriscopeRouter, NavigationHistory} from 'periscope-framework';
+import {Router} from 'aurelia-router';
+import {NavigationHistory} from 'periscope-framework';
 import {SearchExpressionStateView} from './search-expression-state-view'
 
-@inject(PeriscopeRouter, NavigationHistory)
+@inject(Router, NavigationHistory)
 export class History {
 
   constructor(router, navigationHistory){
@@ -11,13 +12,6 @@ export class History {
 
   }
 
-  get currentRoute(){
-    if (this._router.currentRouteItem)
-      return this._router.currentRouteItem.route;
-    return "";
-  }
-
-  @computedFrom('currentRoute')
   get items(){
     var ar = this._navigationHistory.items.slice(0);
     ar.sort(function (a, b) {
@@ -30,16 +24,10 @@ export class History {
   }
 
   navigate(historyItem){
-    this._router.navigate({
-      route: historyItem.url,
-      title: historyItem.title,
-      dashboardName: historyItem.dashboard
-    })
+    this._router.navigate(historyItem.url);
   }
 
   isCurrent(historyItem){
-    if (this._router.currentRouteItem)
-      return historyItem.url === this._router.currentRouteItem.route;
     return false;
   }
 

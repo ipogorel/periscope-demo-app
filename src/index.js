@@ -1,13 +1,14 @@
 import {inject} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {DashboardManager, UserStateStorage, PeriscopeRouter} from 'periscope-framework';
+import {DashboardManager, UserStateStorage} from 'periscope-framework';
 
 
-@inject(DashboardManager, PeriscopeRouter, EventAggregator, UserStateStorage)
+@inject(DashboardManager, Router, EventAggregator, UserStateStorage)
 export class Index {
 
-  constructor(dashboardManager, periscopeRouter, eventAggregator, userStateStorage) {
-    this._router = periscopeRouter;
+  constructor(dashboardManager, router, eventAggregator, userStateStorage) {
+    this._router = router;
     this._dashboardManager = dashboardManager;
     this._eventAggregator = eventAggregator;
     this._userStateStorage = userStateStorage;
@@ -18,11 +19,7 @@ export class Index {
     this._eventAggregator.subscribe('router:navigation:complete', (payload) => {
       if (!payload.instruction.params.dashboard){ // first load
         this._userStateStorage.clearAll();
-        self._router.navigate({
-          title: "Customers",
-          route: "/customers",
-          dashboardName: "customers"
-        });
+        self._router.navigate("/customers");
       }
       else
       {
