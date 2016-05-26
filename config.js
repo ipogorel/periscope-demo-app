@@ -39,12 +39,12 @@ System.config({
     "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.2.0",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
     "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.2.1",
-    "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.1",
+    "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.2",
     "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.2.1",
     "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2",
-    "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.1",
+    "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
     "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2",
-    "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.4",
+    "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
     "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.0.0-beta.1.2.1",
     "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
     "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0-beta.1.2.1",
@@ -61,14 +61,15 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.21",
     "fetch": "github:github/fetch@0.11.0",
     "font-awesome": "npm:font-awesome@4.5.0",
-    "jquery": "npm:jquery@2.2.3",
-    "jquery-min": "npm:jquery@2.2.3",
+    "jquery": "npm:jquery@2.2.4",
+    "jquery-min": "npm:jquery@2.2.4",
     "kendo-ui": "/local_packages/kendo/js/kendo.all.min",
-    "lodash": "npm:lodash@4.12.0",
-    "periscope-framework": "npm:periscope-framework@0.0.16",
-    "periscope-ui": "npm:periscope-ui@0.0.8",
-    "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@0.0.7",
-    "periscope-widgets-datatables": "npm:periscope-widgets-datatables@0.0.8",
+    "lodash": "npm:lodash@4.13.1",
+    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.1",
+    "periscope-framework": "npm:periscope-framework@0.0.17",
+    "periscope-ui": "npm:periscope-ui@0.0.9",
+    "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@0.0.8",
+    "periscope-widgets-datatables": "npm:periscope-widgets-datatables@0.0.9",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
@@ -81,6 +82,9 @@ System.config({
     },
     "github:jspm/nodelibs-crypto@0.1.0": {
       "crypto-browserify": "npm:crypto-browserify@3.11.0"
+    },
+    "github:jspm/nodelibs-domain@0.1.0": {
+      "domain-browser": "npm:domain-browser@1.1.7"
     },
     "github:jspm/nodelibs-events@0.1.1": {
       "events": "npm:events@1.0.2"
@@ -143,7 +147,7 @@ System.config({
       "browserify-zlib": "npm:browserify-zlib@0.1.4"
     },
     "github:twbs/bootstrap@3.3.6": {
-      "jquery": "npm:jquery@2.2.3"
+      "jquery": "npm:jquery@2.2.4"
     },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
@@ -157,6 +161,10 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "sprintf-js": "npm:sprintf-js@1.0.3",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:asap@2.0.4": {
+      "domain": "github:jspm/nodelibs-domain@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:asn1.js@4.6.0": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -194,10 +202,10 @@ System.config({
       "aurelia-history": "npm:aurelia-history@1.0.0-beta.1.2.1",
       "aurelia-history-browser": "npm:aurelia-history-browser@1.0.0-beta.1.2.1",
       "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
-      "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.1",
+      "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.2",
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2",
-      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.1",
-      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.4",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
+      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
       "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.2.7",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
@@ -236,17 +244,16 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.2.1",
       "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2"
     },
-    "npm:aurelia-logging-console@1.0.0-beta.1.2.1": {
-      "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.2.1",
-      "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2"
+    "npm:aurelia-logging-console@1.0.0-beta.1.2.2": {
+      "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.2.1"
     },
     "npm:aurelia-metadata@1.0.0-beta.1.2.1": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2"
     },
-    "npm:aurelia-pal-browser@1.0.0-beta.1.2.1": {
+    "npm:aurelia-pal-browser@1.0.0-beta.2.0.1": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2"
     },
-    "npm:aurelia-polyfills@1.0.0-beta.1.1.4": {
+    "npm:aurelia-polyfills@1.0.0-beta.1.1.6": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2"
     },
     "npm:aurelia-route-recognizer@1.0.0-beta.1.2.1": {
@@ -356,7 +363,7 @@ System.config({
       "create-hash": "npm:create-hash@1.1.2",
       "create-hmac": "npm:create-hmac@1.1.4",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-      "elliptic": "npm:elliptic@6.2.3",
+      "elliptic": "npm:elliptic@6.2.7",
       "inherits": "npm:inherits@2.0.1",
       "parse-asn1": "npm:parse-asn1@5.0.0",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
@@ -366,7 +373,7 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "pako": "npm:pako@0.2.8",
       "process": "github:jspm/nodelibs-process@0.1.2",
-      "readable-stream": "npm:readable-stream@2.1.3",
+      "readable-stream": "npm:readable-stream@2.1.4",
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:btoa@1.1.2": {
@@ -387,6 +394,14 @@ System.config({
       "ieee754": "npm:ieee754@1.1.6",
       "isarray": "npm:isarray@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:chalk@1.1.3": {
+      "ansi-styles": "npm:ansi-styles@2.2.1",
+      "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
+      "has-ansi": "npm:has-ansi@2.0.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "strip-ansi": "npm:strip-ansi@3.0.1",
+      "supports-color": "npm:supports-color@2.0.0"
     },
     "npm:cipher-base@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -437,7 +452,7 @@ System.config({
       "bn.js": "npm:bn.js@4.11.3",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-      "elliptic": "npm:elliptic@6.2.3"
+      "elliptic": "npm:elliptic@6.2.7"
     },
     "npm:create-hash@1.1.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -467,36 +482,36 @@ System.config({
       "public-encrypt": "npm:public-encrypt@4.0.0",
       "randombytes": "npm:randombytes@2.0.3"
     },
-    "npm:datatables.net-bs@1.10.11": {
-      "datatables.net": "npm:datatables.net@1.10.11",
-      "jquery": "npm:jquery@2.2.3"
+    "npm:datatables.net-bs@1.10.12": {
+      "datatables.net": "npm:datatables.net@1.10.12",
+      "jquery": "npm:jquery@2.2.4"
     },
-    "npm:datatables.net-keytable-bs@2.1.1": {
-      "datatables.net-bs": "npm:datatables.net-bs@1.10.11",
-      "datatables.net-keytable": "npm:datatables.net-keytable@2.1.1",
-      "jquery": "npm:jquery@2.2.3"
+    "npm:datatables.net-keytable-bs@2.1.2": {
+      "datatables.net-bs": "npm:datatables.net-bs@1.10.12",
+      "datatables.net-keytable": "npm:datatables.net-keytable@2.1.2",
+      "jquery": "npm:jquery@2.2.4"
     },
-    "npm:datatables.net-keytable@2.1.1": {
-      "datatables.net": "npm:datatables.net@1.10.11",
-      "jquery": "npm:jquery@2.2.3",
+    "npm:datatables.net-keytable@2.1.2": {
+      "datatables.net": "npm:datatables.net@1.10.12",
+      "jquery": "npm:jquery@2.2.4",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:datatables.net-scroller@1.4.1": {
-      "datatables.net": "npm:datatables.net@1.10.11",
-      "jquery": "npm:jquery@2.2.3",
+    "npm:datatables.net-scroller@1.4.2": {
+      "datatables.net": "npm:datatables.net@1.10.12",
+      "jquery": "npm:jquery@2.2.4",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:datatables.net-select-bs@1.1.2": {
-      "datatables.net-bs": "npm:datatables.net-bs@1.10.11",
-      "datatables.net-select": "npm:datatables.net-select@1.1.2",
-      "jquery": "npm:jquery@2.2.3"
+    "npm:datatables.net-select-bs@1.2.0": {
+      "datatables.net-bs": "npm:datatables.net-bs@1.10.12",
+      "datatables.net-select": "npm:datatables.net-select@1.2.0",
+      "jquery": "npm:jquery@2.2.4"
     },
-    "npm:datatables.net-select@1.1.2": {
-      "datatables.net": "npm:datatables.net@1.10.11",
-      "jquery": "npm:jquery@2.2.3"
+    "npm:datatables.net-select@1.2.0": {
+      "datatables.net": "npm:datatables.net@1.10.12",
+      "jquery": "npm:jquery@2.2.4"
     },
-    "npm:datatables.net@1.10.11": {
-      "jquery": "npm:jquery@2.2.3",
+    "npm:datatables.net@1.10.12": {
+      "jquery": "npm:jquery@2.2.4",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:debug@2.2.0": {
@@ -524,7 +539,27 @@ System.config({
       "randombytes": "npm:randombytes@2.0.3",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
-    "npm:elliptic@6.2.3": {
+    "npm:domain-browser@1.1.7": {
+      "events": "github:jspm/nodelibs-events@0.1.1"
+    },
+    "npm:elasticsearch@11.0.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "chalk": "npm:chalk@1.1.3",
+      "events": "github:jspm/nodelibs-events@0.1.1",
+      "forever-agent": "npm:forever-agent@0.6.1",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "http": "github:jspm/nodelibs-http@1.7.1",
+      "https": "github:jspm/nodelibs-https@0.1.0",
+      "lodash-compat": "npm:lodash-compat@3.10.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "promise": "npm:promise@7.1.1",
+      "querystring": "github:jspm/nodelibs-querystring@0.1.0",
+      "url": "github:jspm/nodelibs-url@0.1.0",
+      "util": "github:jspm/nodelibs-util@0.1.0",
+      "zlib": "github:jspm/nodelibs-zlib@0.1.0"
+    },
+    "npm:elliptic@6.2.7": {
       "bn.js": "npm:bn.js@4.11.3",
       "brorand": "npm:brorand@1.0.5",
       "hash.js": "npm:hash.js@1.0.3",
@@ -538,6 +573,13 @@ System.config({
     },
     "npm:font-awesome@4.5.0": {
       "css": "github:systemjs/plugin-css@0.1.20"
+    },
+    "npm:forever-agent@0.6.1": {
+      "http": "github:jspm/nodelibs-http@1.7.1",
+      "https": "github:jspm/nodelibs-https@0.1.0",
+      "net": "github:jspm/nodelibs-net@0.1.2",
+      "tls": "github:jspm/nodelibs-tls@0.1.0",
+      "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:form-data@1.0.0-rc3": {
       "async": "npm:async@1.5.2",
@@ -567,6 +609,9 @@ System.config({
     "npm:graceful-readlink@1.0.1": {
       "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
+    "npm:has-ansi@2.0.0": {
+      "ansi-regex": "npm:ansi-regex@2.0.0"
+    },
     "npm:hash.js@1.0.3": {
       "inherits": "npm:inherits@2.0.1"
     },
@@ -587,7 +632,7 @@ System.config({
     "npm:lodash-compat@3.10.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:lodash@4.12.0": {
+    "npm:lodash@4.13.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -643,7 +688,22 @@ System.config({
     "npm:pegjs@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:periscope-framework@0.0.16": {
+    "npm:periscope-elastic-search@0.0.1": {
+      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
+      "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
+      "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
+      "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
+      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
+      "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
+      "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
+      "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0-beta.1.2.1",
+      "elasticsearch": "npm:elasticsearch@11.0.1",
+      "jquery": "npm:jquery@2.2.4",
+      "lodash": "npm:lodash@4.13.1",
+      "periscope-framework": "npm:periscope-framework@0.0.17"
+    },
+    "npm:periscope-framework@0.0.17": {
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.2.3",
       "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
@@ -653,76 +713,80 @@ System.config({
       "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.2.0",
       "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
       "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.2.1",
-      "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.1",
+      "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.2",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.2.1",
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2",
-      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.1",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
       "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2",
       "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.0.0-beta.1.2.1",
       "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
       "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0-beta.1.2.1",
-      "lodash": "npm:lodash@4.12.0",
+      "lodash": "npm:lodash@4.13.1",
       "moment": "npm:moment@2.13.0",
       "numeral": "npm:numeral@1.5.3",
       "pegjs": "npm:pegjs@0.9.0",
       "swagger-client": "npm:swagger-client@2.1.14"
     },
-    "npm:periscope-ui@0.0.8": {
+    "npm:periscope-ui@0.0.9": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
       "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
-      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.1",
-      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.4",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
+      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
       "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0-beta.1.2.1",
       "bootstrap": "npm:bootstrap@3.3.6",
-      "jquery": "npm:jquery@2.2.3",
-      "lodash": "npm:lodash@4.12.0",
-      "periscope-framework": "npm:periscope-framework@0.0.16",
+      "jquery": "npm:jquery@2.2.4",
+      "lodash": "npm:lodash@4.13.1",
+      "periscope-framework": "npm:periscope-framework@0.0.17",
       "swagger-client": "npm:swagger-client@2.1.14"
     },
-    "npm:periscope-widgets-chartjs@0.0.7": {
+    "npm:periscope-widgets-chartjs@0.0.8": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
       "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
-      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.1",
-      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.4",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
+      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
       "chartist": "npm:chartist@0.9.7",
-      "lodash": "npm:lodash@4.12.0",
-      "periscope-framework": "npm:periscope-framework@0.0.16"
+      "lodash": "npm:lodash@4.13.1",
+      "periscope-framework": "npm:periscope-framework@0.0.17"
     },
-    "npm:periscope-widgets-datatables@0.0.8": {
+    "npm:periscope-widgets-datatables@0.0.9": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
       "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.2.2",
-      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.1",
-      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.4",
+      "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
+      "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
       "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0-beta.1.2.1",
       "bootstrap": "npm:bootstrap@3.3.6",
-      "datatables.net": "npm:datatables.net@1.10.11",
-      "datatables.net-bs": "npm:datatables.net-bs@1.10.11",
-      "datatables.net-keytable": "npm:datatables.net-keytable@2.1.1",
-      "datatables.net-keytable-bs": "npm:datatables.net-keytable-bs@2.1.1",
-      "datatables.net-scroller": "npm:datatables.net-scroller@1.4.1",
-      "datatables.net-select": "npm:datatables.net-select@1.1.2",
-      "datatables.net-select-bs": "npm:datatables.net-select-bs@1.1.2",
-      "jquery": "npm:jquery@2.2.3",
-      "lodash": "npm:lodash@4.12.0",
-      "periscope-framework": "npm:periscope-framework@0.0.16"
+      "datatables.net": "npm:datatables.net@1.10.12",
+      "datatables.net-bs": "npm:datatables.net-bs@1.10.12",
+      "datatables.net-keytable": "npm:datatables.net-keytable@2.1.2",
+      "datatables.net-keytable-bs": "npm:datatables.net-keytable-bs@2.1.2",
+      "datatables.net-scroller": "npm:datatables.net-scroller@1.4.2",
+      "datatables.net-select": "npm:datatables.net-select@1.2.0",
+      "datatables.net-select-bs": "npm:datatables.net-select-bs@1.2.0",
+      "jquery": "npm:jquery@2.2.4",
+      "lodash": "npm:lodash@4.13.1",
+      "periscope-framework": "npm:periscope-framework@0.0.17"
     },
     "npm:process-nextick-args@1.0.7": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:process@0.11.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:promise@7.1.1": {
+      "asap": "npm:asap@2.0.4",
+      "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
     "npm:public-encrypt@4.0.0": {
       "bn.js": "npm:bn.js@4.11.3",
@@ -754,17 +818,7 @@ System.config({
       "stream": "github:jspm/nodelibs-stream@0.1.0",
       "string_decoder": "npm:string_decoder@0.10.31"
     },
-    "npm:readable-stream@1.1.14": {
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "core-util-is": "npm:core-util-is@1.0.2",
-      "events": "github:jspm/nodelibs-events@0.1.1",
-      "inherits": "npm:inherits@2.0.1",
-      "isarray": "npm:isarray@0.0.1",
-      "process": "github:jspm/nodelibs-process@0.1.2",
-      "stream-browserify": "npm:stream-browserify@1.0.0",
-      "string_decoder": "npm:string_decoder@0.10.31"
-    },
-    "npm:readable-stream@2.1.3": {
+    "npm:readable-stream@2.1.4": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "buffer-shims": "npm:buffer-shims@1.0.0",
       "core-util-is": "npm:core-util-is@1.0.2",
@@ -793,10 +847,13 @@ System.config({
     "npm:stream-browserify@1.0.0": {
       "events": "github:jspm/nodelibs-events@0.1.1",
       "inherits": "npm:inherits@2.0.1",
-      "readable-stream": "npm:readable-stream@1.1.14"
+      "readable-stream": "npm:readable-stream@1.0.27-1"
     },
     "npm:string_decoder@0.10.31": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
+    },
+    "npm:strip-ansi@3.0.1": {
+      "ansi-regex": "npm:ansi-regex@2.0.0"
     },
     "npm:superagent@1.8.3": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -821,6 +878,9 @@ System.config({
       "url": "github:jspm/nodelibs-url@0.1.0",
       "util": "github:jspm/nodelibs-util@0.1.0",
       "zlib": "github:jspm/nodelibs-zlib@0.1.0"
+    },
+    "npm:supports-color@2.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:swagger-client@2.1.14": {
       "btoa": "npm:btoa@1.1.2",

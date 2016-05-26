@@ -14,6 +14,6 @@ export class DashboardsList {
   }
 
   navigate(dashboard){
-    this._router.navigate(dashboard.route);
+    this._router.navigate("/" + dashboard.name);
   }
 }

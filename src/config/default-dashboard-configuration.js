@@ -11,12 +11,12 @@ import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSo
 import {GridDT} from 'periscope-widgets-datatables';
 import {BarChart} from 'periscope-widgets-chartjs';
 
-//, DefaultSearchBox
+import {ElasticSearchDataService, AstToElasticSearchQueryParser, ElasticSearchSchemaProvider} from 'periscope-elastic-search';
 
 
-@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(StaticJsonDataService), Factory.of(JsonDataService), Factory.of(CacheManager))
+@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(StaticJsonDataService), Factory.of(JsonDataService), Factory.of(CacheManager), Factory.of(ElasticSearchDataService),  Factory.of(ElasticSearchSchemaProvider))
 export class DefaultDashboardConfiguration extends DashboardConfiguration  {
-  constructor(eventAggregator, userStateStorage, dashboardManager, router, dataServiceFactory, swaggerServiceFactory, cacheManagerFactory){
+  constructor(eventAggregator, userStateStorage, dashboardManager, router, dataServiceFactory, swaggerServiceFactory, cacheManagerFactory, elasticSearchServiceFactory, elasticSearchSchemaProviderFactory){
     super();
     this._eventAggregator = eventAggregator;
     this._router = router;
@@ -25,10 +25,12 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     this._stateStorage = userStateStorage;
     this._swaggerServiceFactory = swaggerServiceFactory;
     this._cacheManager = cacheManagerFactory(new MemoryCacheStorage());
+    this._elasticSearchSchemaProviderFactory = elasticSearchSchemaProviderFactory;
+    this._esServiceFactory = elasticSearchServiceFactory;
   }
   
   invoke(){
-    var customersDataService = this._dataServiceFactory()
+    let customersDataService = this._dataServiceFactory()
     customersDataService.configure({
         url:'/data/customers.json',
         schemaProvider: new StaticSchemaProvider({
@@ -81,7 +83,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         filterParser: new AstToJavascriptParser()
       }
     )
-    var dsCustomers = new Datasource({
+    let dsCustomers = new Datasource({
       name: "customers",
       cache: {
         cacheTimeSeconds: 120,
@@ -92,7 +94,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     });
     //Search box
-    var searchBox = new DefaultSearchBox({
+    let searchBox = new DefaultSearchBox({
       name:"positionsSearchWidget",
       header:"Positions",
       showHeader:false,
@@ -105,7 +107,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
 
     //customers grid
-    var customersGrid = new GridDT({
+    let customersGrid = new GridDT({
       name:"gridWidget",
       header:"Customers",
       showHeader:true,
@@ -149,7 +151,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     });
 
-    var chart = new BarChart({
+    let chart = new BarChart({
       name:"chartWidget",
       header:"Country",
       categoriesField:"Country",
@@ -172,7 +174,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       minHeight: 450
     });
 
-    var changeRoureBefavior = new ChangeRouteBehavior({
+    let changeRoureBefavior = new ChangeRouteBehavior({
         chanel: "gridCommandChannel",
         newRoute: '/orders',
         paramsMapper: filterEvent => {return StateUrlParser.stateToQuery([{
@@ -188,7 +190,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     );
 
-    var createWidgetBehavior = new CreateWidgetBehavior(
+    let createWidgetBehavior = new CreateWidgetBehavior(
       'gridSelectionChannel',
       DefaultDetailedView,
       {
@@ -215,10 +217,9 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     );
 
 
-    var dbCustomers = this._dashboardManager.createDashboard(BootstrapDashboard, {
+    let dbCustomers = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "customers",
-      title:"Customers",
-      route: "/customers"
+      title:"Customers"
     });
     dbCustomers.addWidget(searchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbCustomers.addWidget(customersGrid,{sizeX:6, sizeY:"*", col:1, row:2});
@@ -228,7 +229,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     createWidgetBehavior.attach(dbCustomers);
 
     // CONFIGURE ORDERS DASHBOARD
-    var ordersDataService = this._dataServiceFactory()
+    let ordersDataService = this._dataServiceFactory()
     ordersDataService.configure({
         url:'/data/orders.json',
         schemaProvider: new StaticSchemaProvider({
@@ -294,7 +295,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     );
 
-    var dsOrders = new Datasource({
+    let dsOrders = new Datasource({
       name: "orders",
       cache: {
         cacheTimeSeconds: 120,
@@ -307,7 +308,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
 
     // Orders dashboard
-    var ordersGrid = new GridDT({
+    let ordersGrid = new GridDT({
       name:"gridWidgetOrders",
       header:"Orders",
       stateStorage: this._stateStorage,
@@ -351,7 +352,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     //Search box
 
-    var searchBox = new DefaultSearchBox({
+    let ordersSearchBox = new DefaultSearchBox({
       name:"ordersSearchWidget",
       header:"Orders",
       showHeader:false,
@@ -364,12 +365,11 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
 
 
-    var dbOrders = this._dashboardManager.createDashboard(BootstrapDashboard,{
+    let dbOrders = this._dashboardManager.createDashboard(BootstrapDashboard,{
       name: "orders",
-      title:"Orders",
-      route: "/orders"
+      title:"Orders"
     });
-    dbOrders.addWidget(searchBox, {sizeX:12, sizeY:1, col:1, row:1});
+    dbOrders.addWidget(ordersSearchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbOrders.addWidget(ordersGrid, {sizeX:12, sizeY:'*', col:1, row:2});
     var replaceWidgetBehavior = new ReplaceWidgetBehavior(
       'order-details',
@@ -396,14 +396,14 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         ]
       }
     );
-    var manageNavigationStackBehavior = new ManageNavigationStackBehavior(this._eventAggregator);
+    let manageNavigationStackBehavior = new ManageNavigationStackBehavior(this._eventAggregator);
     replaceWidgetBehavior.attach(dbOrders);
     manageNavigationStackBehavior.attach(dbOrders);
 
 
     // CONFIGURE SWAGGER-BASED DASHBOARD
-    var swaggerDataService = this._swaggerServiceFactory();
-    var dsSwagger = new Datasource({
+    let swaggerDataService = this._swaggerServiceFactory();
+    let dsSwagger = new Datasource({
       name: "datasource",
       cache: {
         cacheTimeSeconds: 120,
@@ -416,7 +416,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
 
     //customers grid
-    var swGrid = new GridDT({
+    let swGrid = new GridDT({
       name:"swaggerGridWidget",
       header:"Swagger Data",
       showHeader:true,
@@ -432,7 +432,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
 
 
-    var swgConfiguratorWidget =  new SwaggerDataSourceConfigurator({
+    let swgConfiguratorWidget =  new SwaggerDataSourceConfigurator({
       name:"dsConfiguratorWidget",
       header:"Swagger Configuration",
       showHeader:true,
@@ -447,12 +447,242 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
 
 
-    var dbSwagger = this._dashboardManager.createDashboard(BootstrapDashboard, "swagger-api",{
+    let dbSwagger = this._dashboardManager.createDashboard(BootstrapDashboard, "swagger-api",{
       name: "swagger-api",
-      title:"Swagger",
-      route: "/swagger-api"
+      title:"Swagger"
     });
     dbSwagger.addWidget(swgConfiguratorWidget,{sizeX:4, sizeY:"*", col:1, row:1});
     dbSwagger.addWidget(swGrid,{sizeX:8, sizeY:"*", col:5, row:1});
+
+    // ELASTIC SEARCH
+
+
+    let esSchemeProvider = this._elasticSearchSchemaProviderFactory("https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/","contoso", "products");
+
+    let esProductsDataService = this._esServiceFactory();
+    esProductsDataService.configure({
+      url:'https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/products/',
+      schemaProvider: esSchemeProvider,
+      filterParser: new AstToElasticSearchQueryParser()
+    });
+
+    let  dsProducts = new Datasource({
+      name: "products",
+      transport:{
+        readService: esProductsDataService
+      }
+    });
+
+    //Search box
+    let searchBoxProducts = new DefaultSearchBox({
+      name:"productsSearchWidget",
+      header:"Products",
+      showHeader:false,
+      dataSource: dsProducts,
+      dataFilter:"",
+      stateStorage: this._stateStorage,
+      behavior:[
+        new DataFilterChangedBehavior("productsSearchBoxChannel",this._eventAggregator)
+      ]
+    });
+
+
+    let productsGrid = new GridDT({
+      name:"productsGridWidget",
+      header:"Products",
+      showHeader:true,
+      minHeight: 450,
+      pageSize: 40,
+      stateStorage: this._stateStorage,
+      navigatable: true,
+      dataFilter:"",
+      dataSource:dsProducts,
+      behavior:[
+        new DataFilterHandleBehavior("productsSearchBoxChannel",this._eventAggregator),
+        new DataSelectedBehavior("productSelectionChannel",this._eventAggregator),
+        new DataActivatedBehavior("productsGridCommandChannel",this._eventAggregator),
+      ],
+      columns:[
+        {
+          field: "ProductKey",
+          title: "#"
+        },
+        {
+          field: "ProductName",
+          title: "Name"
+        },
+        {
+          field: "Status"
+        },
+        {
+          field: "Manufacturer"
+        }
+        ,
+        {
+          field: "Weight"
+        },
+        {
+          field: "Size"
+        }
+      ]
+    });
+
+    let createProductWidgetBehavior = new CreateWidgetBehavior(
+      'productSelectionChannel',
+      DefaultDetailedView,
+      {
+        name:"detailsWidgetProducts",
+        header:"Product details",
+        behavior:[],
+        dataSource: dsProducts,
+        showHeader:true
+      },
+      {sizeX:3, sizeY:"*", col:6, row:2},
+      this._eventAggregator,
+      message => { return [
+        {
+          "left": {
+            "field": "ProductKey",
+            "type": "string",
+            "operand": "==",
+            "value": message.selectedData["ProductKey"].toString()
+          }
+        }
+      ]
+      }
+    );
+    let changeProductsRoureBefavior = new ChangeRouteBehavior({
+        chanel: "productsGridCommandChannel",
+        newRoute: '/sales',
+        paramsMapper: filterEvent => {return StateUrlParser.stateToQuery([{
+          key: "sales:salesSearchWidget",
+          value: {
+            stateType: "searchBoxState",
+            stateObject: "ProductKey = '" + filterEvent.activatedData["ProductKey"].toString() + "'"
+          }
+        }])
+        },
+        eventAggregator: this._eventAggregator,
+        router: this._router
+      }
+    );
+
+
+    let dbProducts = this._dashboardManager.createDashboard(BootstrapDashboard, {
+      name: "products",
+      title:"Products (ElasicSearch)",
+    });
+    dbProducts.addWidget(searchBoxProducts, {sizeX:12, sizeY:1, col:1, row:1});
+    dbProducts.addWidget(productsGrid,{sizeX:9, sizeY:"*", col:1, row:2});
+    createProductWidgetBehavior.attach(dbProducts);
+    changeProductsRoureBefavior.attach(dbProducts);
+
+    // sales
+    let dbSales = this._dashboardManager.createDashboard(BootstrapDashboard, {
+      name: "sales",
+      title:"Sales (ElasicSearch)"
+    });
+
+    let salesSchemeProvider = this._elasticSearchSchemaProviderFactory("https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/","contoso", "sales");
+
+    let esSalesDataService = this._esServiceFactory();
+    esSalesDataService.configure({
+      url:'https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/sales/',
+      schemaProvider: salesSchemeProvider,
+      filterParser: new AstToElasticSearchQueryParser()
+    });
+    let  dsSales = new Datasource({
+      name: "products",
+      transport:{
+        readService: esSalesDataService
+      }
+    });
+
+    //Search box
+
+    let salesSearchBox = new DefaultSearchBox({
+      name:"salesSearchWidget",
+      header:"Sales",
+      showHeader:false,
+      dataSource: dsSales,
+      dataFilter:"",
+      stateStorage: this._stateStorage,
+      behavior:[
+        new DataFilterChangedBehavior("salesSearchChannel",this._eventAggregator)
+      ]
+    });
+
+    let salesGrid = new GridDT({
+      name:"gridWidgetSales",
+      header:"Sales",
+      stateStorage: this._stateStorage,
+      minHeight: 450,
+      pageSize: 25,
+      behavior:[
+        new DataFilterHandleBehavior("salesSearchChannel",this._eventAggregator),
+        new DataActivatedBehavior("sales-details",this._eventAggregator)
+      ],
+      dataSource: dsSales,
+      showHeader:true,
+      dataFilter:"",
+      columns:[
+        {
+          field: "SalesKey",
+          title: "#"
+        },
+        {
+          field: "ProductKey",
+          title: "Product #"
+        }
+        ,
+        {
+          field: "SalesAmount",
+          title: "Sales Amount"
+        }
+        ,
+        {
+          field: "ProductInfo_ProductName",
+          title: "Product Name"
+        },
+        {
+          field: "ProductInfo_ColorName",
+          title: "Color"
+        },
+        {
+          field: "ProductInfo_BrandName",
+          title: "Brand"
+        }
+      ]
+    });
+
+    let replaceSalesGridBehavior = new ReplaceWidgetBehavior(
+      'sales-details',
+      this._eventAggregator,
+      "gridWidgetSales",
+      DefaultDetailedView,
+      {
+        name:"detailsWidgetSales",
+        header:"Sales Details",
+        behavior:[],
+        dataSource: dsSales,
+        showHeader:true
+      },
+      message => {
+        return [
+          {
+            "left": {
+              "field": "SalesKey",
+              "type": "number",
+              "operand": "==",
+              "value": message.activatedData["SalesKey"].toString()
+            }
+          }
+        ]
+      }
+    );
+
+    dbSales.addWidget(salesSearchBox, {sizeX:12, sizeY:1, col:1, row:1});
+    dbSales.addWidget(salesGrid, {sizeX:12, sizeY:'*', col:1, row:2});
+    replaceSalesGridBehavior.attach(dbSales);
   }
 }

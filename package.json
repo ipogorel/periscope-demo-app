@@ -100,10 +100,11 @@
       "font-awesome": "npm:font-awesome@^4.5.0",
       "jquery": "npm:jquery@^2.2.3",
       "lodash": "npm:lodash@^4.11.1",
-      "periscope-framework": "npm:periscope-framework@^0.0.16",
-      "periscope-ui": "npm:periscope-ui@^0.0.8",
-      "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@^0.0.7",
-      "periscope-widgets-datatables": "npm:periscope-widgets-datatables@^0.0.8",
+      "periscope-elastic-search": "npm:periscope-elastic-search@^0.0.1",
+      "periscope-framework": "npm:periscope-framework@^0.0.17",
+      "periscope-ui": "npm:periscope-ui@^0.0.9",
+      "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@^0.0.8",
+      "periscope-widgets-datatables": "npm:periscope-widgets-datatables@^0.0.9",
       "text": "github:systemjs/plugin-text@^0.0.3"
     },
     "devDependencies": {
