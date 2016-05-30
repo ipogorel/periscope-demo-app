@@ -457,11 +457,11 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     // ELASTIC SEARCH
 
 
-    let esSchemeProvider = this._elasticSearchSchemaProviderFactory("https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/","contoso", "products");
+    let esSchemeProvider = this._elasticSearchSchemaProviderFactory("http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/","contoso", "products");
 
     let esProductsDataService = this._esServiceFactory();
     esProductsDataService.configure({
-      url:'https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/products/',
+      url:'http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/products/',
       schemaProvider: esSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
@@ -583,11 +583,11 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       title:"Sales (ElasicSearch)"
     });
 
-    let salesSchemeProvider = this._elasticSearchSchemaProviderFactory("https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/","contoso", "sales");
+    let salesSchemeProvider = this._elasticSearchSchemaProviderFactory("http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/","contoso", "sales");
 
     let esSalesDataService = this._esServiceFactory();
     esSalesDataService.configure({
-      url:'https://search-es-test-icxe4vzg2hotloa4553hyfa5hi.us-east-1.es.amazonaws.com/contoso*/sales/',
+      url:'http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/sales/',
       schemaProvider: salesSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });

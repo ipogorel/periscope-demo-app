@@ -9,5 +9,6 @@ export function configure(aurelia) {
     .plugin('periscope-ui')
     .plugin('periscope-widgets-datatables')
     .plugin('periscope-widgets-chartjs')
+    .plugin('periscope-elastic-search')
   aurelia.start().then(a => a.setRoot());
 }

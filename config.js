@@ -65,11 +65,11 @@ System.config({
     "jquery-min": "npm:jquery@2.2.4",
     "kendo-ui": "/local_packages/kendo/js/kendo.all.min",
     "lodash": "npm:lodash@4.13.1",
-    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.1",
+    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.3",
     "periscope-framework": "npm:periscope-framework@0.0.17",
     "periscope-ui": "npm:periscope-ui@0.0.9",
     "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@0.0.8",
-    "periscope-widgets-datatables": "npm:periscope-widgets-datatables@0.0.9",
+    "periscope-widgets-datatables": "npm:periscope-widgets-datatables@0.0.10",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
@@ -688,7 +688,7 @@ System.config({
     "npm:pegjs@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:periscope-elastic-search@0.0.1": {
+    "npm:periscope-elastic-search@0.0.3": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
@@ -756,7 +756,7 @@ System.config({
       "lodash": "npm:lodash@4.13.1",
       "periscope-framework": "npm:periscope-framework@0.0.17"
     },
-    "npm:periscope-widgets-datatables@0.0.9": {
+    "npm:periscope-widgets-datatables@0.0.10": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
@@ -818,6 +818,16 @@ System.config({
       "stream": "github:jspm/nodelibs-stream@0.1.0",
       "string_decoder": "npm:string_decoder@0.10.31"
     },
+    "npm:readable-stream@1.1.14": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "core-util-is": "npm:core-util-is@1.0.2",
+      "events": "github:jspm/nodelibs-events@0.1.1",
+      "inherits": "npm:inherits@2.0.1",
+      "isarray": "npm:isarray@0.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "stream-browserify": "npm:stream-browserify@1.0.0",
+      "string_decoder": "npm:string_decoder@0.10.31"
+    },
     "npm:readable-stream@2.1.4": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "buffer-shims": "npm:buffer-shims@1.0.0",
@@ -847,7 +857,7 @@ System.config({
     "npm:stream-browserify@1.0.0": {
       "events": "github:jspm/nodelibs-events@0.1.1",
       "inherits": "npm:inherits@2.0.1",
-      "readable-stream": "npm:readable-stream@1.0.27-1"
+      "readable-stream": "npm:readable-stream@1.1.14"
     },
     "npm:string_decoder@0.10.31": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
