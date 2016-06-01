@@ -203,8 +203,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       {sizeX:3, sizeY:"*", col:6, row:2},
       this._eventAggregator,
       message => {
-        return [
-          {
+        return {
             "left": {
               "field": "Id",
               "type": "string",
@@ -212,7 +211,6 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
               "value": message.selectedData["Id"].toString()
             }
           }
-        ]
       }
     );
 
@@ -384,8 +382,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         showHeader:true
       },
       message => {
-        return [
-          {
+        return {
             "left": {
               "field": "Id",
               "type": "number",
@@ -393,7 +390,6 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
               "value": message.activatedData["Id"].toString()
             }
           }
-        ]
       }
     );
     let manageNavigationStackBehavior = new ManageNavigationStackBehavior(this._eventAggregator);
@@ -539,8 +535,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       },
       {sizeX:3, sizeY:"*", col:6, row:2},
       this._eventAggregator,
-      message => { return [
-        {
+      message => { return {
           "left": {
             "field": "ProductKey",
             "type": "string",
@@ -548,7 +543,6 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
             "value": message.selectedData["ProductKey"].toString()
           }
         }
-      ]
       }
     );
     let changeProductsRoureBefavior = new ChangeRouteBehavior({
@@ -668,8 +662,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         showHeader:true
       },
       message => {
-        return [
-          {
+        return {
             "left": {
               "field": "SalesKey",
               "type": "number",
@@ -677,7 +670,6 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
               "value": message.activatedData["SalesKey"].toString()
             }
           }
-        ]
       }
     );
 

@@ -46,7 +46,7 @@ System.config({
     "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2",
     "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
     "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.0.0-beta.1.2.1",
-    "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
+    "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.4",
     "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0-beta.1.2.1",
     "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.2.7",
     "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
@@ -65,14 +65,14 @@ System.config({
     "jquery-min": "npm:jquery@2.2.4",
     "kendo-ui": "/local_packages/kendo/js/kendo.all.min",
     "lodash": "npm:lodash@4.13.1",
-    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.3",
-    "periscope-framework": "npm:periscope-framework@0.0.17",
-    "periscope-ui": "npm:periscope-ui@0.0.9",
-    "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@0.0.8",
-    "periscope-widgets-datatables": "npm:periscope-widgets-datatables@0.0.10",
+    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.4",
+    "periscope-framework": "npm:periscope-framework@0.0.18",
+    "periscope-ui": "npm:periscope-ui@0.0.10",
+    "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@0.0.9",
+    "periscope-widgets-datatables": "npm:periscope-widgets-datatables@0.0.11",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:jspm/nodelibs-assert@0.1.0": {
-      "assert": "npm:assert@1.4.0"
+      "assert": "npm:assert@1.4.1"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.6.0"
@@ -166,7 +166,7 @@ System.config({
       "domain": "github:jspm/nodelibs-domain@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:asn1.js@4.6.0": {
+    "npm:asn1.js@4.6.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "bn.js": "npm:bn.js@4.11.3",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -175,10 +175,9 @@ System.config({
       "minimalistic-assert": "npm:minimalistic-assert@1.0.0",
       "vm": "github:jspm/nodelibs-vm@0.1.0"
     },
-    "npm:assert@1.4.0": {
+    "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "buffer-shims": "npm:buffer-shims@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "util": "npm:util@0.10.3"
     },
@@ -206,7 +205,7 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2",
       "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
       "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.6",
-      "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
+      "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.4",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.2.7",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@1.0.0-beta.1.2.4",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
@@ -259,7 +258,7 @@ System.config({
     "npm:aurelia-route-recognizer@1.0.0-beta.1.2.1": {
       "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2"
     },
-    "npm:aurelia-router@1.0.0-beta.1.2.3": {
+    "npm:aurelia-router@1.0.0-beta.1.2.4": {
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.2.3",
       "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.2.1",
       "aurelia-history": "npm:aurelia-history@1.0.0-beta.1.2.1",
@@ -292,7 +291,7 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.2.1",
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.2",
       "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2",
-      "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
+      "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.4",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.2.7"
     },
     "npm:aurelia-templating@1.0.0-beta.1.2.7": {
@@ -363,7 +362,7 @@ System.config({
       "create-hash": "npm:create-hash@1.1.2",
       "create-hmac": "npm:create-hmac@1.1.4",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-      "elliptic": "npm:elliptic@6.2.7",
+      "elliptic": "npm:elliptic@6.2.8",
       "inherits": "npm:inherits@2.0.1",
       "parse-asn1": "npm:parse-asn1@5.0.0",
       "stream": "github:jspm/nodelibs-stream@0.1.0"
@@ -452,7 +451,7 @@ System.config({
       "bn.js": "npm:bn.js@4.11.3",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
-      "elliptic": "npm:elliptic@6.2.7"
+      "elliptic": "npm:elliptic@6.2.8"
     },
     "npm:create-hash@1.1.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -559,7 +558,7 @@ System.config({
       "util": "github:jspm/nodelibs-util@0.1.0",
       "zlib": "github:jspm/nodelibs-zlib@0.1.0"
     },
-    "npm:elliptic@6.2.7": {
+    "npm:elliptic@6.2.8": {
       "bn.js": "npm:bn.js@4.11.3",
       "brorand": "npm:brorand@1.0.5",
       "hash.js": "npm:hash.js@1.0.3",
@@ -665,7 +664,7 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:parse-asn1@5.0.0": {
-      "asn1.js": "npm:asn1.js@4.6.0",
+      "asn1.js": "npm:asn1.js@4.6.2",
       "browserify-aes": "npm:browserify-aes@1.0.6",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "create-hash": "npm:create-hash@1.1.2",
@@ -688,7 +687,7 @@ System.config({
     "npm:pegjs@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:periscope-elastic-search@0.0.3": {
+    "npm:periscope-elastic-search@0.0.4": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
@@ -701,9 +700,9 @@ System.config({
       "elasticsearch": "npm:elasticsearch@11.0.1",
       "jquery": "npm:jquery@2.2.4",
       "lodash": "npm:lodash@4.13.1",
-      "periscope-framework": "npm:periscope-framework@0.0.17"
+      "periscope-framework": "npm:periscope-framework@0.0.18"
     },
-    "npm:periscope-framework@0.0.17": {
+    "npm:periscope-framework@0.0.18": {
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.2.3",
       "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
@@ -719,7 +718,7 @@ System.config({
       "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.2.0.1",
       "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.2",
       "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.0.0-beta.1.2.1",
-      "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.3",
+      "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.2.4",
       "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0-beta.1.2.1",
       "lodash": "npm:lodash@4.13.1",
       "moment": "npm:moment@2.13.0",
@@ -727,7 +726,7 @@ System.config({
       "pegjs": "npm:pegjs@0.9.0",
       "swagger-client": "npm:swagger-client@2.1.14"
     },
-    "npm:periscope-ui@0.0.9": {
+    "npm:periscope-ui@0.0.10": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
@@ -740,10 +739,10 @@ System.config({
       "bootstrap": "npm:bootstrap@3.3.6",
       "jquery": "npm:jquery@2.2.4",
       "lodash": "npm:lodash@4.13.1",
-      "periscope-framework": "npm:periscope-framework@0.0.17",
+      "periscope-framework": "npm:periscope-framework@0.0.18",
       "swagger-client": "npm:swagger-client@2.1.14"
     },
-    "npm:periscope-widgets-chartjs@0.0.8": {
+    "npm:periscope-widgets-chartjs@0.0.9": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
@@ -754,9 +753,9 @@ System.config({
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.6",
       "chartist": "npm:chartist@0.9.7",
       "lodash": "npm:lodash@4.13.1",
-      "periscope-framework": "npm:periscope-framework@0.0.17"
+      "periscope-framework": "npm:periscope-framework@0.0.18"
     },
-    "npm:periscope-widgets-datatables@0.0.10": {
+    "npm:periscope-widgets-datatables@0.0.11": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
@@ -776,7 +775,7 @@ System.config({
       "datatables.net-select-bs": "npm:datatables.net-select-bs@1.2.0",
       "jquery": "npm:jquery@2.2.4",
       "lodash": "npm:lodash@4.13.1",
-      "periscope-framework": "npm:periscope-framework@0.0.17"
+      "periscope-framework": "npm:periscope-framework@0.0.18"
     },
     "npm:process-nextick-args@1.0.7": {
       "process": "github:jspm/nodelibs-process@0.1.2"
