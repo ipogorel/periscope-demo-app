@@ -65,7 +65,7 @@ System.config({
     "jquery-min": "npm:jquery@2.2.4",
     "kendo-ui": "/local_packages/kendo/js/kendo.all.min",
     "lodash": "npm:lodash@4.13.1",
-    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.4",
+    "periscope-elastic-search": "npm:periscope-elastic-search@0.0.5",
     "periscope-framework": "npm:periscope-framework@0.0.18",
     "periscope-ui": "npm:periscope-ui@0.0.10",
     "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@0.0.9",
@@ -687,7 +687,7 @@ System.config({
     "npm:pegjs@0.9.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:periscope-elastic-search@0.0.4": {
+    "npm:periscope-elastic-search@0.0.5": {
       "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.2.1",
       "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.2.5",
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.5",
