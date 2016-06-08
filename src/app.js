@@ -1,28 +1,25 @@
 import {inject} from 'aurelia-framework';
-import {HistoryStep, DashboardBase} from 'periscope-framework';
-import {DefaultDashboardConfiguration} from './config/default-dashboard-configuration';
+import {DefaultDashboardConfiguration} from './config/dashboard-config';
+import {FetchConfig} from 'aurelia-auth';
+import AppRouterConfig from './config/route-config';
+
 import $ from 'jquery';
 import "./../assets/styles/app.css!";
 import "./../assets/styles/sidebar.css!";
 
-@inject(DefaultDashboardConfiguration)
+@inject(DefaultDashboardConfiguration, FetchConfig, AppRouterConfig)
 export class App {
-  constructor(dashboardsConfiguration) {
+  constructor(dashboardsConfiguration, fetchConfig, appRouterConfig) {
+    this.appRouterConfig = appRouterConfig;
+    this.fetchConfig = fetchConfig;
     dashboardsConfiguration.invoke();
   }
 
-
-  configureRouter(config, router){
-    config.title = 'Periscope';
-    config.addPipelineStep('preActivate', HistoryStep);
-    config.map([
-      { route: ['/', '/:dashboard'],  name: 'dashboard',  moduleId: './index',  nav: true, title:'Dashboard' }
-    ]);
-    this.router = router;
+  activate(){
+    this.appRouterConfig.configure();
+    this.fetchConfig.configure();
   }
 
-
-  
   attached(){
 
     var elementsHeight = $(".navbar")[0].scrollHeight + $(".mainnav")[0].scrollHeight-8;

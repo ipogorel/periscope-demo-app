@@ -1,20 +1,19 @@
-.right-nav {
-  position: absolute;
-  right: 0em;
-  top: 0;
-  padding: 1em 1.6em 2em;
-}
-
-.right-nav a {
-
+a.nav-expander {
   color: #FFFFFF;
   display: block;
   font-size: 15px;
   font-weight: 400;
+  height: 50px;
   margin-right: 0;
+  padding: 1em 1.6em 2em;
+  position: absolute;
+  right: 0;
   text-decoration: none;
   text-transform: uppercase;
+  top: 0;
+  transition: right 0.3s ease-in-out 0s;
   z-index: 12;
+
   transition: right 0.3s ease-in-out 0s;
   -webkit-transition: right 0.3s ease-in-out 0s;
   -moz-transition: right 0.3s ease-in-out 0s;
@@ -22,24 +21,17 @@
 
 }
 
-.right-nav a.logout {
-  right: 0.5em;
-}
-.right-nav a.expand {
-  right: 3em;
-}
-
-.right-nav a:hover {
+a.nav-expander:hover {
   cursor: pointer;
-  background-color: #000000;
+  background: none repeat scroll 0 0 #000000;
 }
 
-.right-nav a.fixed {
+a.nav-expander.fixed {
   position: fixed;
 }
 
-.nav-expanded .right-nav a.expand {
-  right: 18em;
+.nav-expanded a.nav-expander.fixed {
+  right: 20em;
 }
 
 

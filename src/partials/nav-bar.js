@@ -1,10 +1,23 @@
 import $ from 'jquery';
 import * as bootstrap from 'bootstrap';
-import {bindable} from 'aurelia-framework';
+import {AuthService} from 'aurelia-auth';
+import {inject, bindable} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
 
+@inject(AuthService, Router)
 export class NavBar {
-  @bindable router = null;
+  constructor(authService, router){
+    this.authService = authService;
+    this.router = router;
+  }
 
+  get showMenu(){
+    return this.authService.isAuthenticated();
+  }
+  logout(){
+    this.authService.logout();
+    this.router.navigate("/");
+  }
   attached() {
     $('#nav-expander').on('click',function(e){
       e.preventDefault();

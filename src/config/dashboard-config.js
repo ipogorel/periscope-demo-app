@@ -1,11 +1,13 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {EventAggregator} from 'aurelia-event-aggregator';
-
+import {AuthService} from 'aurelia-auth';
+import {HttpClient} from 'aurelia-fetch-client';
+import {DefaultHttpClient} from 'periscope-framework';
 import {DashboardBehavior, ManageNavigationStackBehavior, DataSourceHandleBehavior, DataSourceChangedBehavior, ChangeRouteBehavior, ReplaceWidgetBehavior, CreateWidgetBehavior, SettingsHandleBehavior, DataFilterHandleBehavior, DataFieldSelectedBehavior, DataSelectedBehavior, DataActivatedBehavior, DataFilterChangedBehavior} from 'periscope-framework';
 import {CacheManager, Datasource, JsonDataService, StaticSchemaProvider, MemoryCacheStorage, Factory, StaticJsonDataService} from 'periscope-framework';
 import {AstToJavascriptParser, UserStateStorage, StateUrlParser, DashboardManager} from 'periscope-framework';
-import {DashboardConfiguration} from 'periscope-framework';
+import {PermissionsManager, RoleProvider, DashboardConfiguration} from 'periscope-framework';
 
 import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSourceConfigurator} from 'periscope-ui';
 import {GridDT} from 'periscope-widgets-datatables';
@@ -14,24 +16,100 @@ import {BarChart} from 'periscope-widgets-chartjs';
 import {ElasticSearchDataService, AstToElasticSearchQueryParser, ElasticSearchSchemaProvider} from 'periscope-elastic-search';
 
 
-@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(StaticJsonDataService), Factory.of(JsonDataService), Factory.of(CacheManager), Factory.of(ElasticSearchDataService),  Factory.of(ElasticSearchSchemaProvider))
+@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager, RoleProvider)
 export class DefaultDashboardConfiguration extends DashboardConfiguration  {
-  constructor(eventAggregator, userStateStorage, dashboardManager, router, dataServiceFactory, swaggerServiceFactory, cacheManagerFactory, elasticSearchServiceFactory, elasticSearchSchemaProviderFactory){
+  constructor(eventAggregator, userStateStorage, dashboardManager, router,  cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager, roleProvider){
     super();
     this._eventAggregator = eventAggregator;
     this._router = router;
     this._dashboardManager = dashboardManager;
-    this._dataServiceFactory = dataServiceFactory;
     this._stateStorage = userStateStorage;
-    this._swaggerServiceFactory = swaggerServiceFactory;
     this._cacheManager = cacheManagerFactory(new MemoryCacheStorage());
-    this._elasticSearchSchemaProviderFactory = elasticSearchSchemaProviderFactory;
-    this._esServiceFactory = elasticSearchServiceFactory;
+
+    this._authService = authService;
+    this._permissionsManager = permissionsManager;
+    this._roleProvider = roleProvider;
+
+    this._securedHttpClient = securedHttpClient;
+    this._defaultHttpClient = defaultHttpClient;
   }
   
   invoke(){
-    let customersDataService = this._dataServiceFactory()
+    this._roleProvider.configure(config=>{
+      config.withAuthService(this._authService).withRolesArray([{
+        username: 'hopkins700',
+        roles: ['member']
+      }, {
+        username: 'privosoft',
+        roles: ['admin']
+      }
+      ])
+    });
+    this._permissionsManager.configure(config=>{
+      config.withRoleProvider(this._roleProvider).withPermissionsMatrix([{
+        resource: "positionsSearchWidget",
+        roles: ['member','admin'],
+        permissions:['r','w']
+      },{
+        resource: "gridWidget",
+        roles: ['member','admin'],
+        permissions:['r','w']
+      },{
+        resource: "chartWidget",
+        roles: ['member','admin'],
+        permissions:['r','w']
+      },{
+        resource: "detailsWidgetCustomers",
+        roles: ['admin'],
+        permissions:['r','w']
+      },{
+        resource: "gridWidgetOrders",
+        roles: ['member', 'admin'],
+        permissions:['r','w']
+      },{
+        resource: "ordersSearchWidget",
+        roles: ['member'],
+        permissions:['r']
+      },{
+        resource: "ordersSearchWidget",
+        roles: ['admin'],
+        permissions:['r','w']
+      },{
+        resource: "detailsWidgetOrder",
+        roles: ['member', 'admin'],
+        permissions:['r','w']
+      },{
+        resource: "productsGridWidget",
+        roles: ['member', 'admin'],
+        permissions:['r','w']
+      },{
+        resource: "productsSearchWidget",
+        roles: ['member', 'admin'],
+        permissions:['r','w']
+      },{
+        resource: "detailsWidgetProducts",
+        roles: ['member', 'admin'],
+        permissions:['r','w']
+      },{
+        resource: "salesSearchWidget",
+        roles: ['member', 'admin'],
+        permissions:['r','w']
+      },
+        {
+          resource: "gridWidgetSales",
+          roles: ['member', 'admin'],
+          permissions:['r','w']
+        },
+        {
+          resource: "detailsWidgetSales",
+          roles: ['member', 'admin'],
+          permissions:['r','w']
+        }
+      ]);
+    });
+    let customersDataService = new StaticJsonDataService();
     customersDataService.configure({
+        httpClient: this._securedHttpClient,
         url:'/data/customers.json',
         schemaProvider: new StaticSchemaProvider({
           fields:[
@@ -227,9 +305,10 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     createWidgetBehavior.attach(dbCustomers);
 
     // CONFIGURE ORDERS DASHBOARD
-    let ordersDataService = this._dataServiceFactory()
+    let ordersDataService = new StaticJsonDataService();
     ordersDataService.configure({
         url:'/data/orders.json',
+        httpClient: this._securedHttpClient,
         schemaProvider: new StaticSchemaProvider({
           fields:[
             {
@@ -398,7 +477,11 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
 
     // CONFIGURE SWAGGER-BASED DASHBOARD
-    let swaggerDataService = this._swaggerServiceFactory();
+    let swaggerDataService = new JsonDataService();
+    swaggerDataService.configure({
+      httpClient: this._defaultHttpClient
+    });
+
     let dsSwagger = new Datasource({
       name: "datasource",
       cache: {
@@ -453,11 +536,12 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     // ELASTIC SEARCH
 
 
-    let esSchemeProvider = this._elasticSearchSchemaProviderFactory("http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/","contoso", "products");
+    let esSchemeProvider = new ElasticSearchSchemaProvider(this._defaultHttpClient, "http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/","contoso", "products");
 
-    let esProductsDataService = this._esServiceFactory();
+    let esProductsDataService = new ElasticSearchDataService();
     esProductsDataService.configure({
-      url:'http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/products/',
+      httpClient: this._defaultHttpClient,
+      url:'http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/products/',
       schemaProvider: esSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
@@ -577,11 +661,12 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       title:"Sales (ElasicSearch)"
     });
 
-    let salesSchemeProvider = this._elasticSearchSchemaProviderFactory("http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/","contoso", "sales");
+    let salesSchemeProvider = new ElasticSearchSchemaProvider(this._defaultHttpClient, "http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/","contoso", "sales");
 
-    let esSalesDataService = this._esServiceFactory();
+    let esSalesDataService = new ElasticSearchDataService();
     esSalesDataService.configure({
-      url:'http://ec2-52-201-216-6.compute-1.amazonaws.com:9200/contoso/sales/',
+      httpClient: this._defaultHttpClient,
+      url:'http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/sales/',
       schemaProvider: salesSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
