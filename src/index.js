@@ -62,6 +62,7 @@ export class Index {
   authenticate(name){
     return this._auth.authenticate(name, false, null)
       .then((response)=>{
+        console.log(response);
       });
   }
 

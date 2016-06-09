@@ -52,7 +52,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         permissions:['r','w']
       },{
         resource: "gridWidget",
-        roles: ['member','admin'],
+        roles: ['*'],
         permissions:['r','w']
       },{
         resource: "chartWidget",

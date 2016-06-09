@@ -1,33 +1,14 @@
 var configForDevelopment = {
-  loginRedirect: '#/customers',
+  loginRedirect: '#/profile-complete',
   baseUrl:'http://localhost:5000',
   loginUrl:'/auth/login',
   signupUrl: '/auth/signup',
   loginRoute: '/',
   signupRoute: '/signup',
   providers: {
-    identSrv : {
-      name: 'identSrv',
-      url: '/auth/identSrv',
-      // /url: 'localhost:5000/auth/identSrv',
-      authorizationEndpoint: 'http://localhost:22530/connect/authorize', //if this ends with slash --> game over
-      redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-      scope: ['profile', 'openid'],
-      responseType :'code',
-      scopePrefix: '',
-      scopeDelimiter: ' ',
-      requiredUrlParams: ['scope', 'nonce'],
-      optionalUrlParams: ['display', 'state'],
-      display: 'popup',
-      type: '2.0',
-      clientId: 'jsclient',
-
-      popupOptions: { width: 452, height: 633 }
-    },
-
     github:{
       clientId:'02a9ea70fa4093aebaeb',
-      redirectUri:window.location.origin || window.location.protocol + '//' + window.location.host + '/sign-up',
+      //redirectUri:window.location.origin || window.location.protocol + '//' + window.location.host + '/sign-up',
     },
     facebook:{
       clientId:'482058595322377'
