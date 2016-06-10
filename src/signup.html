@@ -10,17 +10,17 @@
           </li>
         </ul>
         <div class="form-group">
-          <label for="fn" class="placeholder-hidden">Display Name</label>
-          <input type="text" value.bind="model.displayName  & validate" class="form-control" id="fn" placeholder="Displayname">
+          <label for="fnDisplayname" class="placeholder-hidden">Display Name</label>
+          <input type="text" value.bind="model.displayName  & validate" class="form-control" id="fnDisplayname" placeholder="Display Name">
         </div>
         <div class="form-group">
-          <label for="fn" class="placeholder-hidden">Email</label>
-          <input type="text" value.bind="model.email  & validate" class="form-control" id="fn" placeholder="email">
+          <label for="fnEmail" class="placeholder-hidden">Email</label>
+          <input type="text" value.bind="model.email  & validate" class="form-control" id="fnEmail" placeholder="Email">
         </div>
         <div class="form-group">
-          <label for="ln" class="placeholder-hidden">Password</label>
-          <input type="text" value.bind="model.password  & validate" class="form-control" id="ln"
-                 placeholder="password">
+          <label for="lnPassword" class="placeholder-hidden">Password</label>
+          <input type="password" value.bind="model.password  & validate" class="form-control" id="lnPassword"
+                 placeholder="Password">
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary btn-block btn-lg" tabindex="4" click.trigger="signup()">

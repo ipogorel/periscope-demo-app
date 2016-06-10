@@ -8,6 +8,7 @@ export class Registration{
   constructor(auth, router, eventAggregator){
     this.auth = auth;
     this.router = router;
+    this.showForm = false;
     eventAggregator.subscribe("user-profile-channel", message => {
       this.router.navigate("/customers");
     })
@@ -15,9 +16,10 @@ export class Registration{
 
   activate(){
     return this.auth.getMe().then(data=>{
-      if (data.email){// profile completed
+      if (data.email)// profile completed
         this.router.navigate("/customers");
-      }
+      else
+        this.showForm = true;
     })
   }
 }

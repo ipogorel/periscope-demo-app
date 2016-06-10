@@ -18,6 +18,7 @@ export class Index {
     this.model = new LoginModel();
     this.validator = new Validator(this.model)
       .ensure('username')
+      .email()
       .required()
       .ensure('password')
       .required();

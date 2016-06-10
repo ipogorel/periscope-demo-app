@@ -36,14 +36,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
   
   invoke(){
     this._roleProvider.configure(config=>{
-      config.withAuthService(this._authService).withRolesArray([{
-        username: 'hopkins700',
-        roles: ['member']
-      }, {
-        username: 'privosoft',
-        roles: ['admin']
-      }
-      ])
+      config.withAuthService(this._authService).withRolesArray([])
     });
     this._permissionsManager.configure(config=>{
       config.withRoleProvider(this._roleProvider).withPermissionsMatrix([{

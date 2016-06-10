@@ -14,6 +14,7 @@ export class Signup{
     this.model = new SignUpModel();
     this.validator = new Validator(this.model)
       .ensure('email')
+      .email()
       .required()
       .ensure('displayName')
       .required()
