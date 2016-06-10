@@ -1,0 +1,48 @@
+<template>
+  <div class="row">
+    <div class="col-md-12">
+      <form сlass="form account-form">
+        <ul class="list-unstyled">
+          <li repeat.for="error of errors">
+            <span class="text-danger">${error.message}</span>
+          </li>
+        </ul>
+        <div class="form-group">
+          <img class="profile-picture" width="100" src.bind="profile.picture || 'http://placehold.it/100x100'">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Display Name"  value.bind="profile.displayName & validate"  />
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email Address" value.bind="profile.email & validate" />
+        </div>
+        <div class="form-group">
+          <select class="form-control" value.bind="profile.role">
+            <option repeat.for="r of roles" value.bind="r">${r}</option>
+          </select>
+        </div>
+        <button class="btn btn-lg btn-success" type="submit" click.trigger="updateProfile()">Update Information</button>
+      </form>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="btn-group-vertical">
+        <button class="btn btn-sm btn-danger" if.bind="profile.facebook" click.delegate="unlink('facebook')">
+          <i class="ion-social-facebook"></i> Unlink Facebook Account
+        </button>
+        <button class="btn btn-sm btn-primary" if.bind="!profile.facebook" click.delegate="link('facebook')">
+          <i class="ion-social-facebook"></i> Link Facebook Account
+        </button>
+        <br/>
+        <button class="btn btn-sm btn-danger" if.bind="profile.github" click.delegate="unlink('github')">
+          <i class="ion-social-github"></i> Unlink GitHub Account
+        </button>
+        <button class="btn btn-sm btn-primary" if.bind="!profile.github" click.delegate="link('github')">
+          <i class="ion-social-github"></i> Link GitHub Account
+        </button>
+      </div>
+    </div>
+  </div>
+</template>

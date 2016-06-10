@@ -14,6 +14,9 @@ export class NavBar {
   get showMenu(){
     return this.authService.isAuthenticated();
   }
+  profile(){
+    this.router.navigate("/me");
+  }
   logout(){
     this.authService.logout();
     this.router.navigate("/");

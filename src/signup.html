@@ -4,9 +4,10 @@
       <h3>Periscope Demo App.</h3>
       <h5>Please sign up to get access.</h5>
       <form class="form account-form">
-        <li repeat.for="error of errors">
-          <span class="text-danger">${error.message}</span>
-        </li>
+        <ul class="list-unstyled">
+          <li repeat.for="error of errors">
+            <span class="text-danger">${error.message}</span>
+          </li>
         </ul>
         <div class="form-group">
           <label for="fn" class="placeholder-hidden">Display Name</label>

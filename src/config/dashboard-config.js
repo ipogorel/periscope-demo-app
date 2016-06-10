@@ -477,6 +477,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
 
     // CONFIGURE SWAGGER-BASED DASHBOARD
+    /*
     let swaggerDataService = new JsonDataService();
     swaggerDataService.configure({
       httpClient: this._defaultHttpClient
@@ -532,7 +533,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
     dbSwagger.addWidget(swgConfiguratorWidget,{sizeX:4, sizeY:"*", col:1, row:1});
     dbSwagger.addWidget(swGrid,{sizeX:8, sizeY:"*", col:5, row:1});
-
+*/
     // ELASTIC SEARCH
 
 

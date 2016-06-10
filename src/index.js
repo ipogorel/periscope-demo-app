@@ -47,7 +47,7 @@ export class Index {
         })
         .catch(err=>{
           err.json().then(function(e){
-            self.renderErrors(["login failure : " + e.message]);
+            self.renderErrors([{message: ("login failure : " + e.message) }]);
           });
         });
 

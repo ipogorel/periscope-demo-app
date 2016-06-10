@@ -1,5 +1,5 @@
 var configForDevelopment = {
-  loginRedirect: '#/profile-complete',
+  loginRedirect: '#/registration',
   baseUrl:'http://localhost:5000',
   loginUrl:'/auth/login',
   signupUrl: '/auth/signup',

@@ -17,7 +17,10 @@ export class Dashboard {
   attached(){
     var self = this;
     this._eventAggregator.subscribe('router:navigation:complete', (payload) => {
-      self.dashboard = self._dashboardManager.find(payload.instruction.params.dashboard);
+      if (payload.instruction.params.dashboard)
+        self.dashboard = self._dashboardManager.find(payload.instruction.params.dashboard);
+      else
+        self.dashboard = self._dashboardManager.dashboards[0];
       if (self.dashboard)
         self.dashboard.refresh();
     });

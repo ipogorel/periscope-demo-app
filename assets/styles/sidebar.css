@@ -25,8 +25,11 @@
 .right-nav a.logout {
   right: 0.5em;
 }
-.right-nav a.expand {
+.right-nav a.profile {
   right: 3em;
+}
+.right-nav a.expand {
+  right: 5.5em;
 }
 
 .right-nav a:hover {
