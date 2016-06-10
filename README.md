@@ -51,19 +51,47 @@ To run the app, follow these steps.
   >**Note:** Windows users, if you experience an error of "unknown command unzip" you can solve this problem by doing `npm install -g unzip` and then re-running `jspm install`.
 
 6. Install Kendo-UI pro or eval libraries (we use their grids because they have a lot of features, but Periscope will work with anything). Simply drop the files into `local-packages/kendo` folder.
-  
-7. To run the app, execute the following command:
+
+
+7. Install the local server as it described here https://github.com/privosoft/periscope-auth-server and run it
+
+
+8. To run the app, execute the following command:
 
   ```shell
   gulp watch
   ```
-8. Browse to [http://localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
+9. Browse to [http://localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
 
 > Note: At present there is a bug in the HTMLImports polyfill which only occurs on IE. We have submitted a pull request to the team with the fix. In the mean time, if you want to test on IE, you can work around the issue by explicitly adding a script tag before you load system.js. The script tag should look something like this (be sure to confirm the version number):
 
 ```html
 <script src="jspm_packages/github/webcomponents/webcomponentsjs@0.5.2/HTMLImports.js"></script>
 ```
+
+## Organizing Development Enviroment
+
+1. Create directory structure
+
+2. Clone git repositories
+
+3. Run gulp watch for demo-app
+
+  ```shell
+  gulp watch
+  ```
+
+4. for demo-app
+
+  ```shell
+  gulp build-dev-env
+  ```
+
+  and then
+
+  ```shell
+  gulp update-own-deps
+  ```
 
 ## Running The Unit Tests
 
