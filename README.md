@@ -53,7 +53,8 @@ To run the app, follow these steps.
 6. Install Kendo-UI pro or eval libraries (we use their grids because they have a lot of features, but Periscope will work with anything). Simply drop the files into `local-packages/kendo` folder.
 
 
-7. Install the local server as it described here https://github.com/privosoft/periscope-auth-server and run it
+7. Install and run the local server as it is described here https://github.com/privosoft/periscope-auth-server
+Please, keep it running while you are playing with periscope-demo-app.
 
 
 8. To run the app, execute the following command:
@@ -71,9 +72,19 @@ To run the app, follow these steps.
 
 ## Organizing Development Enviroment
 
-1. Create directory structure
+1. You have to create subfolders for each dependent package. Each subfolder name should be the same as package name without the prefix "periscope-" .  So your directory srtucture should look as follows:
 
-2. Clone git repositories
+  ```
+  +-- periscope
+  |   +-- demo-app
+  |   +-- framework (for periscope-framework)
+  |   +-- ui  (for periscope-ui)
+  |   +-- elastic-search
+  |   +-- widgets-datatables
+  |   +-- etc.
+  ```
+
+2. Run 'git clone', 'npm install' and 'jspm install' for each dependent package.
 
 3. Run gulp watch for demo-app
 
@@ -81,13 +92,13 @@ To run the app, follow these steps.
   gulp watch
   ```
 
-4. for demo-app
+4. If you made some changes in any of the dependent package and want to check how they influence on periscope-demo-app behavior just run the following gulp command:
 
   ```shell
   gulp build-dev-env
   ```
 
-  and then
+  and right after 'build-dev-env' finished working run the following:
 
   ```shell
   gulp update-own-deps
