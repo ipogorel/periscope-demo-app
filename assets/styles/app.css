@@ -45,6 +45,9 @@ html, body {
   padding-top: 15px !important;
 }
 
+.mainnav:after {
+  height: 0px;
+}
 
 .search-box-widget .success-check-mark{
   color: #3c763d;

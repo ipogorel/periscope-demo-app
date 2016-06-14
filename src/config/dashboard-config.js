@@ -35,8 +35,20 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
   }
   
   invoke(){
+    let rolesDataService = new JsonDataService();
+    rolesDataService.configure({
+        httpClient: this._securedHttpClient,
+        url:'http://localhost:5000/auth/roles'
+      }
+    )
+    let rolesDataSource = new Datasource({
+      name: "userroles",
+      transport:{
+        readService: rolesDataService
+      }
+    });
     this._roleProvider.configure(config=>{
-      config.withAuthService(this._authService).withRolesArray([])
+      config.withAuthService(this._authService).withDataSource(rolesDataSource)
     });
     this._permissionsManager.configure(config=>{
       config.withRoleProvider(this._roleProvider).withPermissionsMatrix([{
