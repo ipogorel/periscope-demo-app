@@ -7,7 +7,7 @@ import {DefaultHttpClient} from 'periscope-framework';
 import {DashboardBehavior, ManageNavigationStackBehavior, DataSourceHandleBehavior, DataSourceChangedBehavior, ChangeRouteBehavior, ReplaceWidgetBehavior, CreateWidgetBehavior, SettingsHandleBehavior, DataFilterHandleBehavior, DataFieldSelectedBehavior, DataSelectedBehavior, DataActivatedBehavior, DataFilterChangedBehavior} from 'periscope-framework';
 import {CacheManager, Datasource, JsonDataService, StaticSchemaProvider, MemoryCacheStorage, Factory, StaticJsonDataService} from 'periscope-framework';
 import {AstToJavascriptParser, UserStateStorage, StateUrlParser, DashboardManager} from 'periscope-framework';
-import {PermissionsManager, RoleProvider, DashboardConfiguration} from 'periscope-framework';
+import {PermissionsManager, DashboardConfiguration} from 'periscope-framework';
 
 import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSourceConfigurator} from 'periscope-ui';
 import {GridDT} from 'periscope-widgets-datatables';
@@ -16,102 +16,39 @@ import {BarChart} from 'periscope-widgets-chartjs';
 import {ElasticSearchDataService, AstToElasticSearchQueryParser, ElasticSearchSchemaProvider} from 'periscope-elastic-search';
 
 
-@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager, RoleProvider)
+@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager)
 export class DefaultDashboardConfiguration extends DashboardConfiguration  {
-  constructor(eventAggregator, userStateStorage, dashboardManager, router,  cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager, roleProvider){
+  constructor(eventAggregator, userStateStorage, dashboardManager, router,  cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager){
     super();
     this._eventAggregator = eventAggregator;
     this._router = router;
     this._dashboardManager = dashboardManager;
     this._stateStorage = userStateStorage;
     this._cacheManager = cacheManagerFactory(new MemoryCacheStorage());
-
-    this._authService = authService;
     this._permissionsManager = permissionsManager;
-    this._roleProvider = roleProvider;
+    this._authService = authService;
 
     this._securedHttpClient = securedHttpClient;
     this._defaultHttpClient = defaultHttpClient;
   }
   
   invoke(){
-    let rolesDataService = new JsonDataService();
-    rolesDataService.configure({
+    let permissionsDataService = new JsonDataService();
+    permissionsDataService.configure({
         httpClient: this._securedHttpClient,
-        url:'http://localhost:5000/auth/roles'
+        url:'http://localhost:5000/api/permission'
       }
     )
-    let rolesDataSource = new Datasource({
-      name: "userroles",
+    let permissionsDataSource = new Datasource({
+      name: "userpermissions",
       transport:{
-        readService: rolesDataService
+        readService: permissionsDataService
       }
     });
-    this._roleProvider.configure(config=>{
-      config.withAuthService(this._authService).withDataSource(rolesDataSource)
-    });
     this._permissionsManager.configure(config=>{
-      config.withRoleProvider(this._roleProvider).withPermissionsMatrix([{
-        resource: "positionsSearchWidget",
-        roles: ['member','admin'],
-        permissions:['r','w']
-      },{
-        resource: "gridWidget",
-        roles: ['*'],
-        permissions:['r','w']
-      },{
-        resource: "chartWidget",
-        roles: ['member','admin'],
-        permissions:['r','w']
-      },{
-        resource: "detailsWidgetCustomers",
-        roles: ['admin'],
-        permissions:['r','w']
-      },{
-        resource: "gridWidgetOrders",
-        roles: ['member', 'admin'],
-        permissions:['r','w']
-      },{
-        resource: "ordersSearchWidget",
-        roles: ['member'],
-        permissions:['r']
-      },{
-        resource: "ordersSearchWidget",
-        roles: ['admin'],
-        permissions:['r','w']
-      },{
-        resource: "detailsWidgetOrder",
-        roles: ['member', 'admin'],
-        permissions:['r','w']
-      },{
-        resource: "productsGridWidget",
-        roles: ['member', 'admin'],
-        permissions:['r','w']
-      },{
-        resource: "productsSearchWidget",
-        roles: ['member', 'admin'],
-        permissions:['r','w']
-      },{
-        resource: "detailsWidgetProducts",
-        roles: ['member', 'admin'],
-        permissions:['r','w']
-      },{
-        resource: "salesSearchWidget",
-        roles: ['member', 'admin'],
-        permissions:['r','w']
-      },
-        {
-          resource: "gridWidgetSales",
-          roles: ['member', 'admin'],
-          permissions:['r','w']
-        },
-        {
-          resource: "detailsWidgetSales",
-          roles: ['member', 'admin'],
-          permissions:['r','w']
-        }
-      ]);
+      config.withDataSource(permissionsDataSource);
     });
+
     let customersDataService = new StaticJsonDataService();
     customersDataService.configure({
         httpClient: this._securedHttpClient,
@@ -179,7 +116,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     //Search box
     let searchBox = new DefaultSearchBox({
       name:"positionsSearchWidget",
-      header:"Positions",
+      header:"Find Customers",
+      resourceGroup:"customers",
       showHeader:false,
       dataSource: dsCustomers,
       dataFilter:"",
@@ -192,6 +130,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     //customers grid
     let customersGrid = new GridDT({
       name:"gridWidget",
+      resourceGroup:"customers",
       header:"Customers",
       showHeader:true,
       minHeight: 450,
@@ -237,6 +176,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let chart = new BarChart({
       name:"chartWidget",
       header:"Country",
+      resourceGroup:"customers",
       categoriesField:"Country",
       dataSource: dsCustomers,
       showHeader:true,
@@ -278,6 +218,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       DefaultDetailedView,
       {
         name:"detailsWidgetCustomers",
+        group:"customers",
         header:"Customer details",
         behavior:[],
         dataSource: dsCustomers,

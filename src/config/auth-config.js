@@ -6,6 +6,22 @@ var configForDevelopment = {
   loginRoute: '/',
   signupRoute: '/signup',
   providers: {
+    identSrv : {
+      name: 'jetbrains',
+      url: 'auth/jetbrains',
+      authorizationEndpoint: 'http://localhost:8080/hub/api/rest/oauth2/auth', //if this ends with slash --> game over
+      redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
+      scope: ['f12b9a21-6797-472b-b950-4b1deb832aa0','0-0-0-0-0'],
+      responseType :'code',
+      scopePrefix: '',
+      scopeDelimiter: ' ',
+      requiredUrlParams: ['scope', 'nonce'],
+      optionalUrlParams: ['display', 'state'],
+      display: 'popup',
+      type: '2.0',
+      clientId: 'f12b9a21-6797-472b-b950-4b1deb832aa0',
+      popupOptions: { width: 452, height: 633 }
+    },
     github:{
       clientId:'02a9ea70fa4093aebaeb',
       //redirectUri:window.location.origin || window.location.protocol + '//' + window.location.host + '/sign-up',
