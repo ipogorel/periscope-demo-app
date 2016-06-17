@@ -334,6 +334,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let ordersGrid = new GridDT({
       name:"gridWidgetOrders",
       header:"Orders",
+      resourceGroup:"orders",
       stateStorage: this._stateStorage,
       minHeight: 450,
       pageSize: 25,
@@ -377,6 +378,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     let ordersSearchBox = new DefaultSearchBox({
       name:"ordersSearchWidget",
+      resourceGroup:"orders",
       header:"Orders",
       showHeader:false,
       dataSource: dsOrders,
@@ -401,6 +403,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       DefaultDetailedView,
       {
         name:"detailsWidgetOrder",
+        resourceGroup:"orders",
         header:"Order Details",
         behavior:[],
         dataSource: dsOrders,
