@@ -64,6 +64,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.5.0",
     "jquery": "npm:jquery@2.2.4",
     "jquery-min": "npm:jquery@2.2.4",
+    "js-base64": "npm:js-base64@2.1.9",
     "kendo-ui": "/local_packages/kendo/js/kendo.all.min",
     "lodash": "npm:lodash@4.13.1",
     "periscope-elastic-search": "npm:periscope-elastic-search@0.0.7",
@@ -118,7 +119,7 @@ System.config({
       "path-browserify": "npm:path-browserify@0.0.0"
     },
     "github:jspm/nodelibs-process@0.1.2": {
-      "process": "npm:process@0.11.3"
+      "process": "npm:process@0.11.5"
     },
     "github:jspm/nodelibs-querystring@0.1.0": {
       "querystring": "npm:querystring@0.2.0"
@@ -641,6 +642,9 @@ System.config({
     "npm:jquery@3.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:js-base64@2.1.9": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0"
+    },
     "npm:js-yaml@3.6.1": {
       "argparse": "npm:argparse@1.0.7",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -813,6 +817,11 @@ System.config({
     },
     "npm:process@0.11.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:process@0.11.5": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "vm": "github:jspm/nodelibs-vm@0.1.0"
     },
     "npm:promise@7.1.1": {
       "asap": "npm:asap@2.0.4",

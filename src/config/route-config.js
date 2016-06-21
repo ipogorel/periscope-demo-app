@@ -17,9 +17,9 @@ export default class{
       config.map([
         { route: '',  name: 'login',  moduleId: './index',  nav: true, title:'Login' },
         { route: 'signup',  name: 'signup',  moduleId: './signup',  nav: true, title:'SignUp' },
-        { route: 'registration',  name: 'registration',  moduleId: './registration',  nav: true, title:'Registration' },
-        { route: 'me',  name: 'me',  moduleId: './me',  nav: true, title:'Profile' },
-        { route: ['/#/', '/:dashboard'],  name: 'dashboard',  moduleId: './dashboard',  nav: true, title:'Dashboard' }
+        { route: 'registration',  name: 'registration',  moduleId: './registration',  nav: true, title:'Registration',auth:true},
+        { route: 'me',  name: 'me',  moduleId: './me',  nav: true, title:'Profile',auth:true},
+        { route: ['/#/', '/:dashboard'],  name: 'dashboard',  moduleId: './dashboard',  nav: true, title:'Dashboard',auth:true}
 
         //{ route: ['/', '/:dashboard'],  name: 'dashboard',  moduleId: './index',  nav: true, title:'Dashboard' }
       ]);

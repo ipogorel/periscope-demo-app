@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
+import * as base64 from 'js-base64';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
@@ -41,6 +42,10 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     )
     let permissionsDataSource = new Datasource({
       name: "userpermissions",
+      cache: {
+        cacheTimeSeconds: 5,
+        cacheManager: this._cacheManager
+      },
       transport:{
         readService: permissionsDataService
       }
@@ -241,7 +246,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     let dbCustomers = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "customers",
-      title:"Customers"
+      title:"Customers",
+      resourceGroup:"customers"
     });
     dbCustomers.addWidget(searchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbCustomers.addWidget(customersGrid,{sizeX:6, sizeY:"*", col:1, row:2});
@@ -392,7 +398,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     let dbOrders = this._dashboardManager.createDashboard(BootstrapDashboard,{
       name: "orders",
-      title:"Orders"
+      title:"Orders",
+      resourceGroup:"orders"
     });
     dbOrders.addWidget(ordersSearchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbOrders.addWidget(ordersGrid, {sizeX:12, sizeY:'*', col:1, row:2});
@@ -485,13 +492,27 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 */
     // ELASTIC SEARCH
 
-
-    let esSchemeProvider = new ElasticSearchSchemaProvider(this._defaultHttpClient, "http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/","contoso", "products");
+  this._defaultHttpClient.configure(httpConfig => {
+      httpConfig
+        .withDefaults({
+          headers: {
+            'Accept': 'application/json',
+          }
+        })
+        .withInterceptor(
+          {
+            request(request) {
+              request.headers.set("Authorization", "Basic " + Base64.encode("admin:admin"));
+              return request;
+            }
+          });
+    });
+    let esSchemeProvider = new ElasticSearchSchemaProvider(this._defaultHttpClient, "http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/","contoso", "products");
 
     let esProductsDataService = new ElasticSearchDataService();
     esProductsDataService.configure({
       httpClient: this._defaultHttpClient,
-      url:'http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/products/',
+      url: 'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/products',
       schemaProvider: esSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
@@ -508,6 +529,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       name:"productsSearchWidget",
       header:"Products",
       showHeader:false,
+      resourceGroup:"products",
       dataSource: dsProducts,
       dataFilter:"",
       stateStorage: this._stateStorage,
@@ -520,6 +542,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let productsGrid = new GridDT({
       name:"productsGridWidget",
       header:"Products",
+      resourceGroup:"products",
       showHeader:true,
       minHeight: 450,
       pageSize: 40,
@@ -563,6 +586,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       {
         name:"detailsWidgetProducts",
         header:"Product details",
+        resourceGroup:"products",
         behavior:[],
         dataSource: dsProducts,
         showHeader:true
@@ -599,6 +623,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let dbProducts = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "products",
       title:"Products (ElasicSearch)",
+      resourceGroup:"products"
     });
     dbProducts.addWidget(searchBoxProducts, {sizeX:12, sizeY:1, col:1, row:1});
     dbProducts.addWidget(productsGrid,{sizeX:9, sizeY:"*", col:1, row:2});
@@ -608,15 +633,16 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     // sales
     let dbSales = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "sales",
-      title:"Sales (ElasicSearch)"
+      title:"Sales (ElasicSearch)",
+      resourceGroup:"sales"
     });
 
-    let salesSchemeProvider = new ElasticSearchSchemaProvider(this._defaultHttpClient, "http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/","contoso", "sales");
+    let salesSchemeProvider = new ElasticSearchSchemaProvider(this._defaultHttpClient, "http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/","contoso", "sales");
 
     let esSalesDataService = new ElasticSearchDataService();
     esSalesDataService.configure({
       httpClient: this._defaultHttpClient,
-      url:'http://ec2-52-87-247-51.compute-1.amazonaws.com:9200/contoso/sales/',
+      url:'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/sales/',
       schemaProvider: salesSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
@@ -633,6 +659,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       name:"salesSearchWidget",
       header:"Sales",
       showHeader:false,
+      resourceGroup:"sales",
       dataSource: dsSales,
       dataFilter:"",
       stateStorage: this._stateStorage,
@@ -643,6 +670,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     let salesGrid = new GridDT({
       name:"gridWidgetSales",
+      resourceGroup:"sales",
       header:"Sales",
       stateStorage: this._stateStorage,
       minHeight: 450,
@@ -691,6 +719,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       DefaultDetailedView,
       {
         name:"detailsWidgetSales",
+        resourceGroup:"sales",
         header:"Sales Details",
         behavior:[],
         dataSource: dsSales,

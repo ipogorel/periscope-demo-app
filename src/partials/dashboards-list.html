@@ -1,6 +1,8 @@
 <template>
   <template repeat.for="dboard of dashboards">
-    &nbsp;&nbsp;<button class="btn btn-link" click.trigger="navigate(dboard)">${dboard.title}</button>
-    <br/>
+    <div  permissions.bind="{resourceGroup:dboard.resourceGroup,permissions:'read'}">
+      &nbsp;&nbsp;<button class="btn btn-link" click.trigger="navigate(dboard)">${dboard.title}</button>
+      <br/>
+    </div>
   </template>
 </template>
