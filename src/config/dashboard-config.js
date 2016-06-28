@@ -502,7 +502,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         .withInterceptor(
           {
             request(request) {
-              request.headers.set("Authorization", "Basic " + Base64.encode("admin:admin"));
+              //request.headers.set("Authorization", "Basic " + Base64.encode("admin:admin"));
               return request;
             }
           });
@@ -512,7 +512,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let esProductsDataService = new ElasticSearchDataService();
     esProductsDataService.configure({
       httpClient: this._defaultHttpClient,
-      url: 'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/products',
+      url: 'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/products/',
       schemaProvider: esSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
