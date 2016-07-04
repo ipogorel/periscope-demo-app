@@ -7,7 +7,7 @@ import {HttpClient} from 'aurelia-fetch-client';
 import {DefaultHttpClient} from 'periscope-framework';
 import {DashboardBehavior, ManageNavigationStackBehavior, DataSourceHandleBehavior, DataSourceChangedBehavior, ChangeRouteBehavior, ReplaceWidgetBehavior, CreateWidgetBehavior, SettingsHandleBehavior, DataFilterHandleBehavior, DataFieldSelectedBehavior, DataSelectedBehavior, DataActivatedBehavior, DataFilterChangedBehavior} from 'periscope-framework';
 import {CacheManager, Datasource, JsonDataService, StaticSchemaProvider, MemoryCacheStorage, Factory, StaticJsonDataService} from 'periscope-framework';
-import {AstToJavascriptParser, UserStateStorage, StateUrlParser, DashboardManager} from 'periscope-framework';
+import {AstToJavascriptParser, UserStateStorage, StateUrlParser, DashboardManager, DatasourceManager} from 'periscope-framework';
 import {PermissionsManager, DashboardConfiguration} from 'periscope-framework';
 
 import {BootstrapDashboard, DefaultSearchBox, DefaultDetailedView, SwaggerDataSourceConfigurator} from 'periscope-ui';
@@ -17,13 +17,14 @@ import {BarChart} from 'periscope-widgets-chartjs';
 import {ElasticSearchDataService, AstToElasticSearchQueryParser, ElasticSearchSchemaProvider} from 'periscope-elastic-search';
 
 
-@inject(EventAggregator,  UserStateStorage, DashboardManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager)
+@inject(EventAggregator,  UserStateStorage, DashboardManager, DatasourceManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager)
 export class DefaultDashboardConfiguration extends DashboardConfiguration  {
-  constructor(eventAggregator, userStateStorage, dashboardManager, router,  cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager){
+  constructor(eventAggregator, userStateStorage, dashboardManager, datasourceManager, router,  cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager){
     super();
     this._eventAggregator = eventAggregator;
     this._router = router;
     this._dashboardManager = dashboardManager;
+    this._datasourceManager = datasourceManager;
     this._stateStorage = userStateStorage;
     this._cacheManager = cacheManagerFactory(new MemoryCacheStorage());
     this._permissionsManager = permissionsManager;
@@ -108,7 +109,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         filterParser: new AstToJavascriptParser()
       }
     )
-    let dsCustomers = new Datasource({
+    let dsCustomers = this._datasourceManager.createDatasource({
       name: "customers",
       cache: {
         cacheTimeSeconds: 120,
@@ -209,7 +210,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
           key: "orders:ordersSearchWidget",
           value: {
             stateType: "searchBoxState",
-            stateObject: "CustomerId = '" + filterEvent.activatedData["Id"].toString() + "'"
+            stateObject: "CustomerId = '" + filterEvent.params.activatedData["Id"].toString() + "'"
           }
         }])
         },
@@ -237,7 +238,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
               "field": "Id",
               "type": "string",
               "operand": "==",
-              "value": message.selectedData["Id"].toString()
+              "value": message.params.selectedData["Id"].toString()
             }
           }
       }
@@ -324,7 +325,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     );
 
-    let dsOrders = new Datasource({
+    let dsOrders = this._datasourceManager.createDatasource({
       name: "orders",
       cache: {
         cacheTimeSeconds: 120,
@@ -403,12 +404,15 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
     dbOrders.addWidget(ordersSearchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbOrders.addWidget(ordersGrid, {sizeX:12, sizeY:'*', col:1, row:2});
-    var replaceWidgetBehavior = new ReplaceWidgetBehavior(
-      'order-details',
-      this._eventAggregator,
-      "gridWidgetOrders",
-      DefaultDetailedView,
-      {
+
+
+
+    var replaceWidgetBehavior = new ReplaceWidgetBehavior({
+      channel:'order-details',
+      eventAggregator:this._eventAggregator,
+      widgetToReplaceName:"gridWidgetOrders",
+      widgetType:DefaultDetailedView,
+      widgetSettings:{
         name:"detailsWidgetOrder",
         resourceGroup:"orders",
         header:"Order Details",
@@ -416,17 +420,18 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         dataSource: dsOrders,
         showHeader:true
       },
-      message => {
+      mapper: message => {
         return {
-            "left": {
-              "field": "Id",
-              "type": "number",
-              "operand": "==",
-              "value": message.activatedData["Id"].toString()
-            }
+          "left": {
+            "field": "Id",
+            "type": "number",
+            "operand": "==",
+            "value": message.params.activatedData["Id"].toString()
           }
+        }
       }
-    );
+    })
+
     let manageNavigationStackBehavior = new ManageNavigationStackBehavior(this._eventAggregator);
     replaceWidgetBehavior.attach(dbOrders);
     manageNavigationStackBehavior.attach(dbOrders);
@@ -517,7 +522,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       filterParser: new AstToElasticSearchQueryParser()
     });
 
-    let  dsProducts = new Datasource({
+    let  dsProducts = this._datasourceManager.createDatasource({
       name: "products",
       transport:{
         readService: esProductsDataService
@@ -598,7 +603,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
             "field": "ProductKey",
             "type": "string",
             "operand": "==",
-            "value": message.selectedData["ProductKey"].toString()
+            "value": message.params.selectedData["ProductKey"].toString()
           }
         }
       }
@@ -610,7 +615,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
           key: "sales:salesSearchWidget",
           value: {
             stateType: "searchBoxState",
-            stateObject: "ProductKey = '" + filterEvent.activatedData["ProductKey"].toString() + "'"
+            stateObject: "ProductKey = '" + filterEvent.params.activatedData["ProductKey"].toString() + "'"
           }
         }])
         },
@@ -646,8 +651,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       schemaProvider: salesSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
-    let  dsSales = new Datasource({
-      name: "products",
+    let  dsSales = this._datasourceManager.createDatasource({
+      name: "sales",
       transport:{
         readService: esSalesDataService
       }
@@ -712,12 +717,12 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       ]
     });
 
-    let replaceSalesGridBehavior = new ReplaceWidgetBehavior(
-      'sales-details',
-      this._eventAggregator,
-      "gridWidgetSales",
-      DefaultDetailedView,
-      {
+    let replaceSalesGridBehavior = new ReplaceWidgetBehavior({
+      channel:'sales-details',
+      eventAggregator:this._eventAggregator,
+      widgetToReplaceName:"gridWidgetSales",
+      widgetType:DefaultDetailedView,
+      widgetSettings:{
         name:"detailsWidgetSales",
         resourceGroup:"sales",
         header:"Sales Details",
@@ -725,17 +730,20 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         dataSource: dsSales,
         showHeader:true
       },
-      message => {
+      mapper:message => {
         return {
-            "left": {
-              "field": "SalesKey",
-              "type": "number",
-              "operand": "==",
-              "value": message.activatedData["SalesKey"].toString()
-            }
+          "left": {
+            "field": "SalesKey",
+            "type": "number",
+            "operand": "==",
+            "value": message.params.activatedData["SalesKey"].toString()
           }
+        }
       }
+    }
     );
+
+
 
     dbSales.addWidget(salesSearchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbSales.addWidget(salesGrid, {sizeX:12, sizeY:'*', col:1, row:2});

@@ -11,7 +11,7 @@ var configForDevelopment = {
       url: 'auth/jetbrains',
       authorizationEndpoint: 'http://localhost:8080/hub/api/rest/oauth2/auth', //if this ends with slash --> game over
       redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-      scope: ['f12b9a21-6797-472b-b950-4b1deb832aa0','0-0-0-0-0'],
+	scope: ['366a22e5-4435-4f65-9d9b-30aa03f9dbd7','0-0-0-0-0'],
       responseType :'code',
       scopePrefix: '',
       scopeDelimiter: ' ',
@@ -19,7 +19,7 @@ var configForDevelopment = {
       optionalUrlParams: ['display', 'state'],
       display: 'popup',
       type: '2.0',
-      clientId: 'f12b9a21-6797-472b-b950-4b1deb832aa0',
+      clientId: '366a22e5-4435-4f65-9d9b-30aa03f9dbd7',
       popupOptions: { width: 452, height: 633 }
     },
     github:{
