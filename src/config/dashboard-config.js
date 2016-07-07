@@ -5,7 +5,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {AuthService} from 'aurelia-auth';
 import {HttpClient} from 'aurelia-fetch-client';
 import {DefaultHttpClient} from 'periscope-framework';
-import {DashboardBehavior, ManageNavigationStackBehavior, DataSourceHandleBehavior, DataSourceChangedBehavior, ChangeRouteBehavior, ReplaceWidgetBehavior, CreateWidgetBehavior, SettingsHandleBehavior, DataFilterHandleBehavior, DataFieldSelectedBehavior, DataSelectedBehavior, DataActivatedBehavior, DataFilterChangedBehavior} from 'periscope-framework';
+import {DashboardBehavior, ManageNavigationStackBehavior, DataSourceHandleBehavior, DataSourceChangedBehavior, ChangeRouteBehavior, ReplaceWidgetBehavior, CreateWidgetBehavior, SettingsHandleBehavior, DataFilterHandleBehavior, DataFieldSelectedBehavior, DataSelectedBehavior, DataActivatedBehavior, DataFilterChangedBehavior, DrillDownBehavior, DrillDownHandleBehavior} from 'periscope-framework';
 import {CacheManager, Datasource, JsonDataService, StaticSchemaProvider, MemoryCacheStorage, Factory, StaticJsonDataService} from 'periscope-framework';
 import {AstToJavascriptParser, UserStateStorage, StateUrlParser, DashboardManager, DatasourceManager} from 'periscope-framework';
 import {PermissionsManager, DashboardConfiguration} from 'periscope-framework';
@@ -625,6 +625,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     );
 
 
+
     let dbProducts = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "products",
       title:"Products (ElasicSearch)",
@@ -682,7 +683,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       pageSize: 25,
       behavior:[
         new DataFilterHandleBehavior("salesSearchChannel",this._eventAggregator),
-        new DataActivatedBehavior("sales-details",this._eventAggregator)
+        new DataSelectedBehavior("sales-details",this._eventAggregator),
+        new DrillDownBehavior('sales-drill-down', this._eventAggregator)
       ],
       dataSource: dsSales,
       showHeader:true,
@@ -743,10 +745,41 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     }
     );
 
+    let esSalesDetailsDataService = new ElasticSearchDataService();
+    esSalesDetailsDataService.configure({
+      httpClient: this._defaultHttpClient,
+      schemaProvider: salesSchemeProvider,
+      //filterParser: new AstToElasticSearchQueryParser()
+    });
+    let  dsSalesDetails = this._datasourceManager.createDatasource({
+      name: "salesDetails",
+      transport:{
+        readService: esSalesDetailsDataService
+      }
+    });
+    let salesGridDrillDownHandleBehavior = new DrillDownHandleBehavior({
+      channel:'sales-drill-down',
+      eventAggregator:this._eventAggregator,
+      widgetType:GridDT,
+      widgetSettings:{
+        name:"gridWidgetSalesDetails",
+        resourceGroup:"sales",
+        header:"",
+        behavior:[],
+        dataSource: dsSalesDetails,
+        showHeader:true,
+        autoGenerateColumns:true,
+        stateStorage: this._stateStorage,
+        minHeight: 450,
+        pageSize: 25
+      },
+      widgetToReplaceName:"gridWidgetSales"
+    });
 
 
     dbSales.addWidget(salesSearchBox, {sizeX:12, sizeY:1, col:1, row:1});
     dbSales.addWidget(salesGrid, {sizeX:12, sizeY:'*', col:1, row:2});
-    replaceSalesGridBehavior.attach(dbSales);
+    //replaceSalesGridBehavior.attach(dbSales);
+    salesGridDrillDownHandleBehavior.attach(dbSales);
   }
 }
