@@ -219,10 +219,11 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     );
 
-    let createWidgetBehavior = new CreateWidgetBehavior(
-      'gridSelectionChannel',
-      DefaultDetailedView,
-      {
+
+    let createWidgetBehavior = new CreateWidgetBehavior({
+      chanel:'gridSelectionChannel',
+      widgetType: DefaultDetailedView,
+      widgetSettings:{
         name:"detailsWidgetCustomers",
         group:"customers",
         header:"Customer details",
@@ -230,9 +231,9 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         dataSource: dsCustomers,
         showHeader:true
       },
-      {sizeX:3, sizeY:"*", col:6, row:2},
-      this._eventAggregator,
-      message => {
+      widgetDimensions:{sizeX:3, sizeY:"*", col:6, row:2},
+      eventAggregator: this._eventAggregator,
+      filterMapper: message => {
         return {
             "left": {
               "field": "Id",
@@ -242,6 +243,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
             }
           }
       }
+    }
     );
 
 
@@ -517,7 +519,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let esProductsDataService = new ElasticSearchDataService();
     esProductsDataService.configure({
       httpClient: this._defaultHttpClient,
-      url: 'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/products/',
+      url: 'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/products/_search',
       schemaProvider: esSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
@@ -585,25 +587,28 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       ]
     });
 
-    let createProductWidgetBehavior = new CreateWidgetBehavior(
-      'productSelectionChannel',
-      DefaultDetailedView,
-      {
-        name:"detailsWidgetProducts",
-        header:"Product details",
-        resourceGroup:"products",
-        behavior:[],
-        dataSource: dsProducts,
-        showHeader:true
-      },
-      {sizeX:3, sizeY:"*", col:6, row:2},
-      this._eventAggregator,
-      message => { return {
-          "left": {
-            "field": "ProductKey",
-            "type": "string",
-            "operand": "==",
-            "value": message.params.selectedData["ProductKey"].toString()
+
+    let createProductWidgetBehavior = new CreateWidgetBehavior({
+        chanel: 'productSelectionChannel',
+        widgetType: DefaultDetailedView,
+        widgetSettings: {
+          name: "detailsWidgetProducts",
+          header: "Product details",
+          resourceGroup: "products",
+          behavior: [],
+          dataSource: dsProducts,
+          showHeader: true
+        },
+        widgetDimensions: {sizeX: 3, sizeY: "*", col: 6, row: 2},
+        eventAggregator: this._eventAggregator,
+        filterMapper: message => {
+          return {
+            "left": {
+              "field": "ProductKey",
+              "type": "string",
+              "operand": "==",
+              "value": message.params.selectedData["ProductKey"].toString()
+            }
           }
         }
       }
@@ -648,7 +653,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     let esSalesDataService = new ElasticSearchDataService();
     esSalesDataService.configure({
       httpClient: this._defaultHttpClient,
-      url:'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/sales/',
+      url:'http://ec2-52-87-179-8.compute-1.amazonaws.com:9200/contoso/sales/_search',
       schemaProvider: salesSchemeProvider,
       filterParser: new AstToElasticSearchQueryParser()
     });
@@ -747,9 +752,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     let esSalesDetailsDataService = new ElasticSearchDataService();
     esSalesDetailsDataService.configure({
-      httpClient: this._defaultHttpClient,
-      schemaProvider: salesSchemeProvider,
-      //filterParser: new AstToElasticSearchQueryParser()
+      httpClient: this._defaultHttpClient
     });
     let  dsSalesDetails = this._datasourceManager.createDatasource({
       name: "salesDetails",
@@ -757,6 +760,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         readService: esSalesDetailsDataService
       }
     });
+
     let salesGridDrillDownHandleBehavior = new DrillDownHandleBehavior({
       channel:'sales-drill-down',
       eventAggregator:this._eventAggregator,
