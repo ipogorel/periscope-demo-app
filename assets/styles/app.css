@@ -34,6 +34,10 @@ html, body {
 
 /*.dashboard-container { height: 100%;}*/
 
+.no-bottom-magin{
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
 
 #dashboard {
   height: 100%;
