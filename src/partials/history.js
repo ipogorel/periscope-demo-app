@@ -34,9 +34,9 @@ export class History {
 
   getStateView(stateItem){
     if (stateItem.value)
-      switch (stateItem.value.stateType){
+      switch (stateItem.stateType){
         case "searchBoxState":
-          return new SearchExpressionStateView(stateItem.value.stateObject);
+          return new SearchExpressionStateView(stateItem.value);
         default :
           return null;
       }

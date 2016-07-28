@@ -2,12 +2,14 @@ import {AuthorizeStep} from 'aurelia-auth';
 import {HistoryStep} from 'periscope-framework'
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
+import {DashboardManager} from 'periscope-framework';
 
-@inject(Router)
+@inject(Router, DashboardManager)
 export default class{
 
-  constructor(router){
+  constructor(router, dashboardManager){
     this.router = router;
+    this.dashboardManager = dashboardManager;
   }
   configure(){
     var appRouterConfig = function(config){
@@ -24,8 +26,7 @@ export default class{
         //{ route: ['/', '/:dashboard'],  name: 'dashboard',  moduleId: './index',  nav: true, title:'Dashboard' }
       ]);
     };
-
-    this.router.configure(appRouterConfig);
+    return this.router.configure(appRouterConfig);
   }
 }
 

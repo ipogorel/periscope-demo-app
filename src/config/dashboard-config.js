@@ -35,6 +35,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
   }
   
   invoke(){
+    this._dashboardManager.configure({dashboardRouteName:"dashboard"});
+    
     let permissionsDataService = new JsonDataService();
     permissionsDataService.configure({
         httpClient: this._securedHttpClient,
@@ -207,11 +209,9 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         chanel: "gridCommandChannel",
         newRoute: '/orders',
         paramsMapper: filterEvent => {return StateUrlParser.stateToQuery([{
-          key: "orders:ordersSearchWidget",
-          value: {
-            stateType: "searchBoxState",
-            stateObject: "CustomerId = '" + filterEvent.params.activatedData["Id"].toString() + "'"
-          }
+          stateType: "searchBoxState",
+          name: "ordersSearchWidget",
+          value: "CustomerId = '" + filterEvent.params.activatedData["Id"].toString() + "'"
         }])
         },
         eventAggregator: this._eventAggregator,
@@ -219,6 +219,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
       }
     );
 
+    //name: "orders:ordersSearchWidget",
 
     let createWidgetBehavior = new CreateWidgetBehavior({
       chanel:'gridSelectionChannel',

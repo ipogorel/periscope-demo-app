@@ -1,23 +1,27 @@
 import {inject} from 'aurelia-framework';
 import {DefaultDashboardConfiguration} from './config/dashboard-config';
 import {FetchConfig} from 'aurelia-auth';
+import {UserStateStorage} from 'periscope-framework';
 import AppRouterConfig from './config/route-config';
 
 import $ from 'jquery';
 import "./../assets/styles/app.css!";
 import "./../assets/styles/sidebar.css!";
 
-@inject(DefaultDashboardConfiguration, FetchConfig, AppRouterConfig)
+@inject(DefaultDashboardConfiguration, FetchConfig, AppRouterConfig, UserStateStorage)
 export class App {
-  constructor(dashboardsConfiguration, fetchConfig, appRouterConfig) {
-    this.appRouterConfig = appRouterConfig;
+  constructor(dashboardsConfiguration, fetchConfig, appRouterConfig, userStateStorage) {
     this.fetchConfig = fetchConfig;
-    dashboardsConfiguration.invoke();
+    this.userStateStorage = userStateStorage;
+
+    appRouterConfig.configure().then(c=>{
+      dashboardsConfiguration.invoke();
+    })
   }
 
   activate(){
-    this.appRouterConfig.configure();
     this.fetchConfig.configure();
+    this.userStateStorage.clearAll();
   }
 
   attached(){

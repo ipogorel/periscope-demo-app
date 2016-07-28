@@ -11,7 +11,7 @@ var configForDevelopment = {
       url: 'auth/jetbrains',
       authorizationEndpoint: 'http://localhost:8080/hub/api/rest/oauth2/auth', //if this ends with slash --> game over
       redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-	scope: ['477b3ff8-8f8e-42ed-8898-dc2ac5308977','0-0-0-0-0'],
+	    scope: ['477b3ff8-8f8e-42ed-8898-dc2ac5308977','0-0-0-0-0'],
       responseType :'code',
       scopePrefix: '',
       scopeDelimiter: ' ',
