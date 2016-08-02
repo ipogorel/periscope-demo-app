@@ -618,12 +618,10 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         chanel: "productsGridCommandChannel",
         newRoute: '/sales',
         paramsMapper: filterEvent => {return StateUrlParser.stateToQuery([{
-          key: "sales:salesSearchWidget",
-          value: {
             stateType: "searchBoxState",
-            stateObject: "ProductKey = '" + filterEvent.params.activatedData["ProductKey"].toString() + "'"
-          }
-        }])
+            name: "salesSearchWidget",
+            value: "ProductKey = '" + filterEvent.params.activatedData["ProductKey"].toString() + "'"
+          }])
         },
         eventAggregator: this._eventAggregator,
         router: this._router
