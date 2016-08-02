@@ -52,17 +52,37 @@ To run the app, follow these steps.
 
 6. Install Kendo-UI pro or eval libraries (we use their grids because they have a lot of features, but Periscope will work with anything). Simply drop the files into `local-packages/kendo` folder.
 
+7. Install and run JetBrains Hub https://www.jetbrains.com/hub/
 
-7. Install and run the local server as it is described here https://github.com/privosoft/periscope-auth-server
+8. Install the local server as it is described here https://github.com/privosoft/periscope-auth-server
+
+9. Run configuration task
+
+  ```shell
+  gulp setup
+  ```
+
+10. Right after the configuration task is complete you need to sigh in to your Jetbrains Hub as admin and create a new Hub user with role 'periscope-developer'
+
+11. Then you need to update your app and local server with the Hub service ClientId and Secret:
+- Sigh in to your local Jetbrains Hub as admin
+- Open "More Settings" -> "Services" -> Periscope.
+- Copy Periscope service ID and secret
+- Open the local server configuration file ([periscope-auth-server]/config/config.development.js) and find the following keys config.JETBRAINSHUB_CLIENTID and  config.JETBRAINSHUB_SECRET. You need to update these two constants with the Hub service ID and secret.
+- Open the demo app configuration file ([periscope-demo-app]/src/config/auth-config.js). Update identSrv -> clientId with the new clientID and add this id into the identSrv -> scope array.
+
+
+12. Run the local server as it is described here https://github.com/privosoft/periscope-auth-server
 Please, keep it running while you are playing with periscope-demo-app.
 
 
-8. To run the app, execute the following command:
+13. To run the app, execute the following command:
 
   ```shell
   gulp watch
   ```
-9. Browse to [http://localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
+
+14. Browse to [http://localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
 
 > Note: At present there is a bug in the HTMLImports polyfill which only occurs on IE. We have submitted a pull request to the team with the fix. In the mean time, if you want to test on IE, you can work around the issue by explicitly adding a script tag before you load system.js. The script tag should look something like this (be sure to confirm the version number):
 
