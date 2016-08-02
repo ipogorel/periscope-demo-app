@@ -103,10 +103,10 @@
       "js-base64": "npm:js-base64@^2.1.9",
       "lodash": "npm:lodash@^4.11.1",
       "periscope-elastic-search": "npm:periscope-elastic-search@^0.0.8",
-      "periscope-framework": "npm:periscope-framework@^0.0.21",
-      "periscope-ui": "npm:periscope-ui@^0.0.14",
-      "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@^0.0.12",
-      "periscope-widgets-datatables": "npm:periscope-widgets-datatables@^0.0.14",
+      "periscope-framework": "npm:periscope-framework@^0.0.23",
+      "periscope-ui": "npm:periscope-ui@^0.0.16",
+      "periscope-widgets-chartjs": "npm:periscope-widgets-chartjs@^0.0.15",
+      "periscope-widgets-datatables": "npm:periscope-widgets-datatables@^0.0.17",
       "text": "github:systemjs/plugin-text@^0.0.3"
     },
     "devDependencies": {
