@@ -18,6 +18,8 @@ export default class{
       config.addPipelineStep('authorize', AuthorizeStep); // Add a route filter to the authorize extensibility point.
       config.map([
         { route: '',  name: 'login',  moduleId: './index',  nav: true, title:'Login' },
+        { route: 'test',  name: 'test',  moduleId: './test',  nav: true, title:'Test'},
+        { route: 'test2',  name: 'test2',  moduleId: './test-serialization',  nav: true, title:'Test'},
         { route: 'signup',  name: 'signup',  moduleId: './signup',  nav: true, title:'SignUp' },
         { route: 'registration',  name: 'registration',  moduleId: './registration',  nav: true, title:'Registration',auth:true},
         { route: 'me',  name: 'me',  moduleId: './me',  nav: true, title:'Profile',auth:true},

@@ -49,9 +49,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         cacheTimeSeconds: 5,
         cacheManager: this._cacheManager
       },
-      transport:{
-        readService: permissionsDataService
-      }
+      readService: permissionsDataService
     });
     this._permissionsManager.configure(config=>{
       config.withDataSource(permissionsDataSource);
@@ -117,9 +115,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         cacheTimeSeconds: 120,
         cacheManager: this._cacheManager
       },
-      transport:{
-        readService: customersDataService
-      }
+      readService: customersDataService
     });
     //Search box
     let searchBox = new DefaultSearchBox({
@@ -334,9 +330,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         cacheTimeSeconds: 120,
         cacheManager: this._cacheManager
       },
-      transport:{
-        readService: ordersDataService
-      }
+      readService: ordersDataService
+
     });
 
 
@@ -453,9 +448,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
         cacheTimeSeconds: 120,
         cacheManager: this._cacheManager
       },
-      transport:{
-        readService: swaggerDataService
-      }
+      readService: swaggerDataService
     });
 
 
@@ -527,9 +520,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
 
     let  dsProducts = this._datasourceManager.createDatasource({
       name: "products",
-      transport:{
-        readService: esProductsDataService
-      }
+      readService: esProductsDataService
     });
 
     //Search box
@@ -658,9 +649,8 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
     let  dsSales = this._datasourceManager.createDatasource({
       name: "sales",
-      transport:{
-        readService: esSalesDataService
-      }
+      readService: esSalesDataService
+
     });
 
     //Search box
@@ -755,9 +745,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration  {
     });
     let  dsSalesDetails = this._datasourceManager.createDatasource({
       name: "salesDetails",
-      transport:{
-        readService: esSalesDetailsDataService
-      }
+      readService: esSalesDetailsDataService
     });
 
     let salesGridDrillDownHandleBehavior = new DrillDownHandleBehavior({
