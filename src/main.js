@@ -12,7 +12,8 @@ export function configure(aurelia) {
     .plugin('periscope-ui')
     .plugin('periscope-widgets-datatables')
     .plugin('periscope-widgets-chartjs')
-    .plugin('periscope-elastic-search').plugin('aurelia-auth', (baseConfig)=>{
+    .plugin('periscope-elastic-search')
+    .plugin('aurelia-auth', (baseConfig)=>{
       baseConfig.configure(config);
     })
   aurelia.start().then(a => a.setRoot());
