@@ -15,6 +15,6 @@ export function configure(aurelia) {
     .plugin('periscope-elastic-search')
     .plugin('aurelia-auth', (baseConfig)=>{
       baseConfig.configure(config);
-    })
+    });
   aurelia.start().then(a => a.setRoot());
 }
