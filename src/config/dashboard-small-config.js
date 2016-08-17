@@ -16,10 +16,11 @@ import {BarChart} from 'periscope-widgets-chartjs';
 
 import {ElasticSearchDataService, AstToElasticSearchQueryParser, ElasticSearchSchemaProvider} from 'periscope-elastic-search';
 
+import {PeriscopeFactory, PeriscopeObjectConfigurator, DashboardSerializer} from 'periscope-framework';
 
-@inject(EventAggregator,  UserStateStorage, DashboardManager, DatasourceManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager)
+@inject(EventAggregator,  UserStateStorage, DashboardManager, DatasourceManager, Router, Factory.of(CacheManager), HttpClient, DefaultHttpClient, AuthService, PermissionsManager, PeriscopeFactory)
 export class DefaultDashboardConfiguration extends DashboardConfiguration {
-  constructor(eventAggregator, userStateStorage, dashboardManager, datasourceManager, router, cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager) {
+  constructor(eventAggregator, userStateStorage, dashboardManager, datasourceManager, router, cacheManagerFactory, securedHttpClient, defaultHttpClient, authService, permissionsManager, periscopeFactory) {
     super();
     this._eventAggregator = eventAggregator;
     this._router = router;
@@ -28,7 +29,7 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration {
     this._stateStorage = userStateStorage;
     this._cacheManager = cacheManagerFactory(new MemoryCacheStorage());
     this._permissionsManager = permissionsManager;
-    this._authService = authService;
+    this._periscopeFactory = periscopeFactory;
 
     this._securedHttpClient = securedHttpClient;
     this._defaultHttpClient = defaultHttpClient;
@@ -37,140 +38,172 @@ export class DefaultDashboardConfiguration extends DashboardConfiguration {
   invoke() {
     this._dashboardManager.configure({dashboardRouteName: "dashboard"});
     let permissionsDataService = new JsonDataService();
-    permissionsDataService.configure({
-        httpClient: this._securedHttpClient,
-        url:'http://localhost:5000/api/permission'
-      }
-    )
-    let permissionsDataSource = new Datasource({
-      name: "userpermissions",
-      cache: {
-        cacheTimeSeconds: 5,
-        cacheManager: this._cacheManager
-      },
-      readService: permissionsDataService
-    });
+    permissionsDataService.httpClient = this._securedHttpClient;
+    permissionsDataService.url = 'http://localhost:5000/api/permission';
+
+    let permissionsDataSource = new Datasource();
+    permissionsDataSource.name = "userpermissions";
+    permissionsDataSource.cache = {
+      cacheTimeSeconds: 5,
+      cacheManager: this._cacheManager
+    };
+    permissionsDataSource.readService = permissionsDataService;
+
     this._permissionsManager.configure(config=>{
       config.withDataSource(permissionsDataSource);
     });
 
-    let customersDataService = new StaticJsonDataService();
-    customersDataService.configure({
-        httpClient: this._securedHttpClient,
-        url:'/data/customers.json',
-        schemaProvider: new StaticSchemaProvider({
-          fields:[
-            {
-              field:"Id",
-              type:"string"
-            },
-            {
-              field:"CompanyName",
-              type:"string"
-            },
-            {
-              field:"ContactName",
-              type:"string"
-            },
-            {
-              field:"ContactTitle",
-              type:"string"
-            },
-            {
-              field:"Address",
-              type:"string"
-            },
-            {
-              field:"City",
-              type:"string"
-            },
-            {
-              field:"Country",
-              type:"string"
-            },
-            {
-              field:"PostalCode",
-              type:"string"
-            },
-            {
-              field:"Phone",
-              type:"string"
-            },
-            {
-              field:"Fax",
-              type:"string"
-            }
-          ]
-        }),
-        dataMapper: data=>{
-          return data.Results
-        },
-        filterParser: new AstToJavascriptParser()
-      }
-    )
-    let dsCustomers = this._datasourceManager.createDatasource({
-      name: "customers",
-      cache: {
-        cacheTimeSeconds: 120,
-        cacheManager: this._cacheManager
+    let staticSchemaProvider = new StaticSchemaProvider();
+    staticSchemaProvider.schema = [
+      {
+        field:"Id",
+        type:"string"
       },
-      readService: customersDataService
-
-    });
-
-    //customers grid
-    let customersGrid = new GridDT({
-      name:"gridWidget",
-      resourceGroup:"customers",
-      header:"Customers",
-      showHeader:true,
-      minHeight: 450,
-      pageSize: 25,
-      stateStorage: this._stateStorage,
-      navigatable: true,
-      behavior:[
-        new DataFilterHandleBehavior("searchBoxChannel",this._eventAggregator),
-        new DataSelectedBehavior("gridSelectionChannel",this._eventAggregator),
-        new DataActivatedBehavior("gridCommandChannel",this._eventAggregator),
-        new DataFieldSelectedBehavior("gridFieldSelectionChannel",this._eventAggregator)
-      ],
-      dataSource: dsCustomers,
-      dataFilter:"",
-      columns:[
-        {
-          field: "Id",
-          title: "#"
-        },
-        {
-          field: "ContactName",
-          title: "Contact Name"
-        },
-        {
-          field: "ContactTitle",
-          title: "Contact Title",
-          selectable: true
-        },
-        {
-          field: "Country",
-          selectable: true
-        },
-        {
-          field: "City"
-        }
-      ],
-      group: {
-        field: "Country",
-        dir: "asc"
+      {
+        field:"CompanyName",
+        type:"string"
+      },
+      {
+        field:"ContactName",
+        type:"string"
+      },
+      {
+        field:"ContactTitle",
+        type:"string"
+      },
+      {
+        field:"Address",
+        type:"string"
+      },
+      {
+        field:"City",
+        type:"string"
+      },
+      {
+        field:"Country",
+        type:"string"
+      },
+      {
+        field:"PostalCode",
+        type:"string"
+      },
+      {
+        field:"Phone",
+        type:"string"
+      },
+      {
+        field:"Fax",
+        type:"string"
       }
-    });
+    ];
+
+    let customersDataService = new StaticJsonDataService();
+    customersDataService.httpClient = this._securedHttpClient;
+    customersDataService.url ='/data/customers.json';
+    customersDataService.schemaProvider = staticSchemaProvider;
+    customersDataService.dataMapper = data=>{ return data.Results };
+    customersDataService.filterParser = new AstToJavascriptParser();
+
+    let dsCustomers = new Datasource();
+    dsCustomers.name = "customers";
+    dsCustomers.cache = {
+      cacheTimeSeconds: 120,
+      cacheManager: this._cacheManager
+    };
+    dsCustomers.readService = customersDataService;
+
+    // CREATE GRID
+    let customersGrid = new GridDT();
+    customersGrid.name ="gridWidget";
+    customersGrid.resourceGroup = "customers";
+    customersGrid.header = "Customers";
+    customersGrid.showHeader = true;
+    customersGrid.minHeight = 450;
+    customersGrid.pageSize = 25;
+    //customersGrid.stateStorage = this._stateStorage;
+    customersGrid.navigatable = true;
+    customersGrid.dataSource = dsCustomers;
+    customersGrid.dataFilter = "";
+    customersGrid.columns = [
+      {
+        field: "Id",
+        title: "#"
+      },
+      {
+        field: "ContactName",
+        title: "Contact Name"
+      },
+      {
+        field: "ContactTitle",
+        title: "Contact Title",
+        selectable: true
+      },
+      {
+        field: "Country",
+        selectable: true
+      },
+      {
+        field: "City"
+      }
+    ];
+    customersGrid.group = {
+      field: "Country",
+      dir: "asc"
+    };
+    let dfb = new DataFilterHandleBehavior(this._eventAggregator);
+    dfb.channel = "searchBoxChannel";
+    customersGrid.attachBehavior(dfb);
+
+    let dsb = new DataSelectedBehavior(this._eventAggregator);
+    dsb.channel = "gridSelectionChannel";
+    customersGrid.attachBehavior(dsb);
+
+    let dab = new DataActivatedBehavior(this._eventAggregator);
+    dab.channel = "gridCommandChannel";
+    customersGrid.attachBehavior(dab);
+
+    let dfsb = new DataFieldSelectedBehavior(this._eventAggregator);
+    dfsb.channel = "gridFieldSelectionChannel";
+    customersGrid.attachBehavior(dfsb);
+
+
+    // CREATE CHART
+    let chart = new BarChart();
+    chart.name ="chartWidget";
+    chart.header = "Country";
+    chart.resourceGroup = "customers";
+    chart.categoriesField = "Country";
+    chart.dataSource = dsCustomers;
+    chart.dataFilter = "";
+    chart.showHeader = true;
+    chart.minHeight = 450;
+
+    let dfhb =  new DataFilterHandleBehavior(this._eventAggregator);
+    dfhb.channel = "searchBoxChannel";
+    chart.attachBehavior(dfhb);
+
+    let shb = new SettingsHandleBehavior(this._eventAggregator);
+    shb.channel = "gridFieldSelectionChannel";
+    shb.messageMapper = message => {
+      return {
+        header: message.fieldName,
+        categoriesField: message.fieldName
+      };
+    }
+    chart.attachBehavior(shb);
+
+
 
     let dbCustomers = this._dashboardManager.createDashboard(BootstrapDashboard, {
       name: "customers",
       title:"Customers",
       resourceGroup:"customers"
     });
-    dbCustomers.addWidget(customersGrid,{sizeX:6, sizeY:"*", col:1, row:2});
+    dbCustomers.addWidget(customersGrid,{sizeX:6, sizeY:"*", col:1, row:1});
+    dbCustomers.addWidget(chart, {sizeX:"*", sizeY:"*", col:7, row:1});
 
-    
+    let serializer = new DashboardSerializer(new PeriscopeObjectConfigurator(this._periscopeFactory));
+    let config = serializer.serialize(this._dashboardManager.dashboards);
+    this._dashboardManager.dashboards = serializer.deserialize(config);
   }
 }

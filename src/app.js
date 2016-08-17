@@ -1,6 +1,7 @@
 import {inject} from 'aurelia-framework';
 //import {DefaultDashboardConfiguration} from './config/dashboard-config';
 import {DefaultDashboardConfiguration} from './config/dashboard-small-config-serialized';
+//import {DefaultDashboardConfiguration} from './config/dashboard-small-config';
 import {FetchConfig} from 'aurelia-auth';
 import {UserStateStorage} from 'periscope-framework';
 import AppRouterConfig from './config/route-config';
